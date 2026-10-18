@@ -136,7 +136,7 @@ html, body {
   ::-webkit-scrollbar { width: 0; height: 0; display: none; }
   html, body { scrollbar-width: none; -ms-overflow-style: none; }
 }
-.modal-bg, .modal, .po-modal-bg, .po-modal, .wt-overlay, .wt-viewer {
+.modal-bg, .modal {
   overscroll-behavior: contain;
 }
 body.topbar-modal-open {
@@ -147,12 +147,12 @@ body.topbar-modal-open {
    scrolling element. Way less "is this scrolling the page or the modal?"
    confusion. */
 @media (max-width: 480px) {
-  .modal-bg, .po-modal-bg {
+  .modal-bg {
     padding: 0 !important;
     align-items: stretch !important;
     justify-content: stretch !important;
   }
-  .modal, .po-modal {
+  .modal {
     width: 100% !important;
     max-width: 100% !important;
     max-height: 100vh !important;
@@ -187,10 +187,6 @@ body.topbar-modal-open {
     </a>
     <button class="topbar-water-add" id="topbarWaterAdd" aria-label="Log one drink" type="button">+</button>
   </div>
-  <a href="gym.html" class="topbar-pill" id="topbarGym">
-    <span class="topbar-pill-dot"></span>
-    <span class="topbar-pill-label">GYM</span>
-  </a>
   <a href="finance.html" class="topbar-pill" id="topbarFinance">
     <span class="topbar-pill-dot"></span>
     <span class="topbar-pill-label">FINANCE</span>
@@ -382,9 +378,7 @@ body.topbar-modal-open {
   // gets `.show` or `.is-open`, lock the body scroll. When the last
   // one closes, unlock.
   function startModalLock() {
-    const MODAL_SELECTORS = [
-      '.modal-bg', '.po-modal-bg', '.wt-overlay', '.wt-viewer', '.wt-cam'
-    ];
+    const MODAL_SELECTORS = ['.modal-bg'];
     function anyOpen() {
       for (const sel of MODAL_SELECTORS) {
         const els = document.querySelectorAll(sel);

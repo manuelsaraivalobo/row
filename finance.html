@@ -1615,6 +1615,31 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .fin-back-btn { background: var(--surface); border: 0; color: var(--ink); font-size: 14px; }
 .nw-chart-line, #nwChartLine { filter: none !important; }
+
+/* Section switch sits at the top (the app tab bar owns the bottom). */
+.bottom-tabs {
+  position: sticky; top: 0; bottom: auto; left: auto; right: auto;
+  z-index: 50;
+  display: flex; gap: 2px;
+  margin: 0 0 18px;
+  padding: 3px;
+  border: 0; border-radius: 14px;
+  background: var(--surface);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.bot-tab {
+  flex: 1; max-width: none;
+  flex-direction: row; justify-content: center; gap: 5px;
+  padding: 8px 4px;
+  border-radius: 11px;
+  color: var(--ink-2);
+}
+.bot-tab:hover { background: transparent; color: var(--ink); }
+.bot-tab.active { background: var(--raised); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); }
+.bot-tab-icon { font-size: 14px; }
+.bot-tab-label { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+@media (max-width: 380px) { .bot-tab-icon { display: none; } }
+.shell { padding-bottom: 40px; }
 </style>
 </head>
 <body>
@@ -1625,6 +1650,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
   <span>Back</span>
 </a>
+
+<nav class="bottom-tabs" id="bottomTabs" aria-label="Sections">
+  <button class="bot-tab active" data-tab="net">
+    <span class="bot-tab-icon">📊</span>
+    <span class="bot-tab-label">Net Worth</span>
+  </button>
+  <button class="bot-tab" data-tab="subs">
+    <span class="bot-tab-icon">🔁</span>
+    <span class="bot-tab-label">Subs</span>
+  </button>
+  <button class="bot-tab" data-tab="incoming">
+    <span class="bot-tab-icon">📦</span>
+    <span class="bot-tab-label">Orders</span>
+  </button>
+  <button class="bot-tab" data-tab="wish">
+    <span class="bot-tab-icon">🎯</span>
+    <span class="bot-tab-label">Wishlist</span>
+  </button>
+</nav>
 
 <!-- ===== FINANCE TICKER (rotating subscription renewals) ===== -->
 <div class="finance-ticker hidden" id="financeTicker">
@@ -1642,15 +1686,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:14px">
       <div>
         <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em;font-weight:500">Total net worth</div>
-        <div id="netWorthTotal" style="font-size:34px;font-weight:700;color:var(--text-primary);line-height:1.05;margin-top:2px">CHF 0</div>
+        <div id="netWorthTotal" style="font-size:34px;font-weight:700;color:var(--text-primary);line-height:1.05;margin-top:2px">€0</div>
         <div id="netWorthBreakdown" style="font-size:11px;color:var(--text-tertiary);margin-top:4px"></div>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
-        <span style="font-size:11px;color:var(--text-tertiary)">CHF</span>
         <select id="netWorthCurrency" style="background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;font-family:inherit;cursor:pointer">
           <option value="CHF">CHF</option>
           <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
+          <option value="EUR" selected>EUR</option>
           <option value="GBP">GBP</option>
         </select>
       </div>
@@ -1784,7 +1827,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:12px">
       <div>
         <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em;font-weight:500">Monthly burn</div>
-        <div id="subsTotal" style="font-size:28px;font-weight:700;color:var(--text-primary);line-height:1.1;margin-top:2px">CHF 0 <span style="font-size:13px;color:var(--text-tertiary);font-weight:500">/ mo</span></div>
+        <div id="subsTotal" style="font-size:28px;font-weight:700;color:var(--text-primary);line-height:1.1;margin-top:2px">€0 <span style="font-size:13px;color:var(--text-tertiary);font-weight:500">/ mo</span></div>
         <div id="subsYearly" style="font-size:11px;color:var(--text-tertiary);margin-top:2px"></div>
       </div>
       <div id="subsCount" style="font-size:11px;color:var(--text-tertiary)"></div>
@@ -1797,7 +1840,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
       <select id="subCurrency" style="padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius-md);font-size:12px;font-family:inherit;background:var(--bg-card);color:var(--text-primary);max-width:90px">
         <option value="CHF">CHF</option>
         <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
+        <option value="EUR" selected>EUR</option>
         <option value="GBP">GBP</option>
       </select>
       <select id="subPeriod" style="padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius-md);font-size:12px;font-family:inherit;background:var(--bg-card);color:var(--text-primary);max-width:100px">
@@ -1834,7 +1877,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
       <select id="ordCurrency" class="ord-input ord-input-ccy">
         <option value="CHF">CHF</option>
         <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
+        <option value="EUR" selected>EUR</option>
         <option value="GBP">GBP</option>
       </select>
       <select id="ordFromCat" class="ord-input ord-input-from" title="Which net worth account this comes out of">
@@ -1869,7 +1912,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     <div class="wish-hero-top">
       <div>
         <div class="wish-hero-eyebrow">WISHLIST TOTAL</div>
-        <div class="wish-hero-num" id="wishTotal">CHF 0</div>
+        <div class="wish-hero-num" id="wishTotal">€0</div>
       </div>
       <div class="wish-hero-pct-wrap">
         <div class="wish-hero-pct-label">% OF NET WORTH</div>
@@ -1891,7 +1934,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
       <select id="wishCurrency" class="wish-input wish-input-ccy">
         <option value="CHF">CHF</option>
         <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
+        <option value="EUR" selected>EUR</option>
         <option value="GBP">GBP</option>
       </select>
       <button class="wish-add-btn" id="wishAddBtn" onclick="window.__addWish && window.__addWish()">+ Add</button>
@@ -1914,24 +1957,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 </div>
 
 <!-- ===== BOTTOM TAB BAR ===== -->
-<nav class="bottom-tabs" id="bottomTabs" aria-label="Sections">
-  <button class="bot-tab active" data-tab="net">
-    <span class="bot-tab-icon">📊</span>
-    <span class="bot-tab-label">Net Worth</span>
-  </button>
-  <button class="bot-tab" data-tab="subs">
-    <span class="bot-tab-icon">🔁</span>
-    <span class="bot-tab-label">Subs</span>
-  </button>
-  <button class="bot-tab" data-tab="incoming">
-    <span class="bot-tab-icon">📦</span>
-    <span class="bot-tab-label">Orders</span>
-  </button>
-  <button class="bot-tab" data-tab="wish">
-    <span class="bot-tab-icon">🎯</span>
-    <span class="bot-tab-label">Wishlist</span>
-  </button>
-</nav>
+
 
 <script>
 (function() {

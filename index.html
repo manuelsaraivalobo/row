@@ -763,21 +763,6 @@ body {
   <div class="section">
     <div class="section-title">To Do List</div>
 
-    <!-- FROM NOTION -->
-    <div class="gm-card gm-card-notion" id="gmCardNotion">
-      <div class="gm-header">
-        <div class="gm-header-left">
-          <div class="gm-eyebrow">From Notion</div>
-          <div class="gm-tomorrow-sub" id="notionSub">Open tasks from your Task List.</div>
-        </div>
-        <button type="button" class="nt-refresh" id="notionRefresh" aria-label="Refresh Notion tasks">↻</button>
-      </div>
-      <ul id="notionList" class="goal-list gm-list"></ul>
-      <div id="notionEmpty" class="empty-state" style="display:none;"></div>
-      <button type="button" id="notionMore" class="gm-show-toggle" style="display:none;"></button>
-      <div class="gm-status" id="notionStatus"></div>
-    </div>
-
     <!-- TODAY -->
     <div class="gm-card" id="gmCardToday">
       <div class="gm-header">
@@ -803,6 +788,21 @@ body {
         <input id="goalInput" class="gm-input" type="text" placeholder="Add a goal for today…" autocomplete="off">
         <button type="button" id="goalAddBtn"    class="gm-add">+ Add</button>
       </div>
+    </div>
+
+    <!-- FROM NOTION -->
+    <div class="gm-card gm-card-notion" id="gmCardNotion">
+      <div class="gm-header">
+        <div class="gm-header-left">
+          <div class="gm-eyebrow">From Notion</div>
+          <div class="gm-tomorrow-sub" id="notionSub">Open tasks from your Task List.</div>
+        </div>
+        <button type="button" class="nt-refresh" id="notionRefresh" aria-label="Refresh Notion tasks">↻</button>
+      </div>
+      <ul id="notionList" class="goal-list gm-list"></ul>
+      <div id="notionEmpty" class="empty-state" style="display:none;"></div>
+      <button type="button" id="notionMore" class="gm-show-toggle" style="display:none;"></button>
+      <div class="gm-status" id="notionStatus"></div>
     </div>
 
     <!-- PLAN TOMORROW -->

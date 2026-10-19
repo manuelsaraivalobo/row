@@ -1,5 +1,5 @@
 ﻿// =============================================================
-// Persistent dashboard top bar.
+// Persistent dashboard tab bar (bottom of the screen, iOS style).
 // Drop this on any page with:
 //     <script src="topbar.js" defer></script>
 // It self-injects HTML + CSS, reads progress from the same
@@ -11,63 +11,46 @@
   // -------- CSS --------
   const css = `
 .topbar {
-  position: sticky; top: 0; z-index: 40;
-  display: flex; gap: 6px;
-  padding: max(10px, env(safe-area-inset-top)) 14px 10px;
-  /* Frosted white, like iOS navigation bars. */
-  background: rgba(255, 255, 255, 0.82);
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  display: flex; justify-content: center; gap: 8px;
+  padding: 6px max(16px, env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-right));
+  /* Frosted white, like the iOS tab bar. */
+  background: rgba(255, 255, 255, 0.86);
   -webkit-backdrop-filter: saturate(1.8) blur(20px);
   backdrop-filter: saturate(1.8) blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
 }
-.topbar-pill {
-  flex: 1 1 0; min-width: 0;
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 8px 12px;
-  background: #F5F5F7;
-  border-radius: 999px;
+.topbar-tab {
+  flex: 1 1 0; max-width: 160px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 5px 8px 3px;
+  border-radius: 12px;
   text-decoration: none;
-  color: #1D1D1F;
+  color: #AEAEB2;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s;
+  transition: color 0.15s;
 }
-.topbar-pill:hover { background: #EBEBEF; }
-.topbar-pill-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #34C759; flex-shrink: 0;
-}
-.topbar-pill.warn .topbar-pill-dot { background: #FF9500; }
-.topbar-pill.miss .topbar-pill-dot {
-  background: #FF3B30;
-  animation: topbar-miss-pulse 1.6s ease-in-out infinite;
-}
-@keyframes topbar-miss-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); }
-  50%      { box-shadow: 0 0 0 5px rgba(255, 59, 48, 0); }
-}
-.topbar-pill-label {
-  font-size: 13px; font-weight: 600;
-  color: #1D1D1F;
-  flex-shrink: 0;
-}
-.topbar-pill-count {
-  margin-left: auto;
-  font-size: 13px; font-weight: 500;
-  color: #6E6E73;
+.topbar-tab:hover { color: #6E6E73; }
+.topbar-tab.active { color: #1D1D1F; }
+.topbar-icon { position: relative; width: 26px; height: 26px; }
+.topbar-icon svg { width: 26px; height: 26px; display: block; }
+.topbar-label { font-size: 11px; font-weight: 600; letter-spacing: 0.01em; }
+.topbar-badge {
+  position: absolute; top: -4px; left: 17px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px;
+  border: 2px solid #FFFFFF;
+  background: #FF9500; color: #FFFFFF;
+  font-size: 11px; font-weight: 700; line-height: 14px; text-align: center;
   font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  box-sizing: border-box;
 }
+.topbar-badge[hidden] { display: none; }
+.topbar-tab.miss .topbar-badge { background: #FF3B30; }
 
-@media (max-width: 480px) {
-  .topbar { padding-left: 12px; padding-right: 12px; gap: 5px; }
-  .topbar-pill { padding: 7px 10px; gap: 5px; }
-  .topbar-pill-label { font-size: 12px; }
-  .topbar-pill-count { font-size: 12px; }
-}
-@media (max-width: 360px) {
-  .topbar-pill-dot { display: none; }
-}
+/* Room so the last bit of every page can scroll above the bar. */
+html body { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
 
 /* === Global mobile lockdown ===
    1) Hide the right-side scrollbar on phones (iOS uses overlay scrollbars anyway).
@@ -117,17 +100,21 @@ body.topbar-modal-open {
 
   // -------- HTML --------
   const html = `
-<header class="topbar" id="topbar" role="navigation" aria-label="Quick stats">
-  <a href="index.html" class="topbar-pill" id="topbarGoals">
-    <span class="topbar-pill-dot"></span>
-    <span class="topbar-pill-label">Goals</span>
-    <span class="topbar-pill-count" id="topbarGoalsCount">—/—</span>
+<nav class="topbar" id="topbar" aria-label="Pages">
+  <a href="index.html" class="topbar-tab" id="topbarGoals" data-pages="/,/index.html,/brief.html">
+    <span class="topbar-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 11 15.5 16.5 9.5"/></svg>
+      <span class="topbar-badge" id="topbarGoalsBadge" hidden></span>
+    </span>
+    <span class="topbar-label">Goals</span>
   </a>
-  <a href="finance.html" class="topbar-pill" id="topbarFinance">
-    <span class="topbar-pill-dot"></span>
-    <span class="topbar-pill-label">Finance</span>
+  <a href="finance.html" class="topbar-tab" id="topbarFinance" data-pages="/finance.html">
+    <span class="topbar-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><path d="M16 15h2"/><path d="M6 6l9-3 2 3"/></svg>
+    </span>
+    <span class="topbar-label">Finance</span>
   </a>
-</header>
+</nav>
 `;
 
   function injectStyleAndHTML() {
@@ -139,7 +126,13 @@ body.topbar-modal-open {
 
     const wrap = document.createElement('div');
     wrap.innerHTML = html.trim();
-    document.body.insertBefore(wrap.firstChild, document.body.firstChild);
+    document.body.appendChild(wrap.firstChild);
+
+    // Highlight the tab for the page we're on.
+    const here = location.pathname.replace(/^.*\//, '/') || '/';
+    document.querySelectorAll('.topbar-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.dataset.pages.split(',').indexOf(here) !== -1);
+    });
   }
 
   // -------- Active-date helpers (match the goals page 6 AM rollover) --------
@@ -172,9 +165,9 @@ body.topbar-modal-open {
     return 'warn';
   }
 
-  function setPillStatus(pillEl, status) {
-    pillEl.classList.remove('good', 'warn', 'miss');
-    if (status === 'warn' || status === 'miss') pillEl.classList.add(status);
+  function setTabStatus(tabEl, status) {
+    tabEl.classList.remove('good', 'warn', 'miss');
+    if (status === 'warn' || status === 'miss') tabEl.classList.add(status);
   }
 
   function render() {
@@ -182,11 +175,12 @@ body.topbar-modal-open {
     if (!goalsEl) return; // not injected yet
 
     const g = getGoalsProgress();
-
-    document.getElementById('topbarGoalsCount').textContent =
-      g.total ? g.done + '/' + g.total : '0/0';
-
-    setPillStatus(goalsEl, classifyStatus(g.done, g.total));
+    const left = g.total - g.done;
+    const badge = document.getElementById('topbarGoalsBadge');
+    badge.hidden = left <= 0;
+    badge.textContent = left > 9 ? '9+' : String(left);
+    goalsEl.setAttribute('aria-label', 'Goals, ' + (g.total ? g.done + ' of ' + g.total + ' done' : 'none set'));
+    setTabStatus(goalsEl, classifyStatus(g.done, g.total));
   }
 
   // -------- Mobile lockdown helpers --------

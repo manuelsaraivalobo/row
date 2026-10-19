@@ -1531,6 +1531,17 @@ select.debt-input { -webkit-appearance: none; appearance: none; }
   font-family: inherit; font-size: 15px; font-weight: 600;
   cursor: pointer;
 }
+.debt-backup {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px;
+  margin-top: 14px;
+  font-size: 13px; color: var(--ink-3);
+}
+.debt-backup button {
+  padding: 0; border: 0; background: none;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--ink-2); cursor: pointer;
+}
+.debt-backup-status { flex-basis: 100%; text-align: center; color: var(--ink-2); min-height: 16px; }
 @media (max-width: 420px) {
   .debt-net { font-size: 40px; }
   .debt-split-val { font-size: 15px; }
@@ -1831,6 +1842,14 @@ select.debt-input { -webkit-appearance: none; appearance: none; }
       <button type="button" class="debt-save" id="debtSave">+ Add</button>
       <button type="button" class="debt-cancel" id="debtCancel" hidden>Cancel</button>
     </div>
+  </div>
+
+  <!-- Move debts between devices (data lives on each device) -->
+  <div class="debt-backup">
+    <button type="button" id="debtImport">Import</button>
+    <span aria-hidden="true">·</span>
+    <button type="button" id="debtExport">Export</button>
+    <div class="debt-backup-status" id="debtBackupStatus"></div>
   </div>
 </div>
 
@@ -3281,6 +3300,67 @@ select.debt-input { -webkit-appearance: none; appearance: none; }
     debtResetForm();
     renderDebts();
   }
+
+  // Import / export as a short JSON code (copy on one device, paste on another).
+  function debtBackupStatus(msg) {
+    const el = document.getElementById('debtBackupStatus');
+    el.textContent = msg;
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.textContent = ''; }, 5000);
+  }
+  function debtImport(text) {
+    let data;
+    try { data = JSON.parse(String(text).trim()); } catch (e) { return debtBackupStatus('That code isn’t valid.'); }
+    const rows = Array.isArray(data) ? data : (data && Array.isArray(data.debts) ? data.debts : null);
+    if (!rows) return debtBackupStatus('That code has no debts in it.');
+    const list = debtsAll();
+    const sig = d => [d.dir, debtPersonKey(d.person), String(d.details || '').trim().toLowerCase(), Number(d.entered_amount).toFixed(2), d.date].join('|');
+    const seen = new Set(list.map(sig));
+    let added = 0;
+    rows.forEach(r => {
+      const amt = parseFloat(r.amount);
+      if (!r || !r.person || isNaN(amt) || amt <= 0) return;
+      const ccy = ['EUR', 'CHF', 'USD', 'GBP'].indexOf(r.currency) !== -1 ? r.currency : 'EUR';
+      const rate = exchangeRates[ccy] || 1;
+      const existing = list.find(d => debtPersonKey(d.person) === debtPersonKey(r.person));
+      const item = {
+        id: 'd_' + Date.now() + '_' + Math.floor(Math.random() * 99999),
+        ts: Date.now(),
+        dir: r.dir === 'out' ? 'out' : 'in',
+        person: existing ? existing.person : String(r.person).trim().slice(0, 120),
+        details: String(r.details || '').trim().slice(0, 200),
+        amount: amt / rate,
+        entered_amount: amt,
+        entered_currency: ccy,
+        date: /^\d{4}-\d{2}-\d{2}$/.test(r.date || '') ? r.date : debtToday(),
+        status: DEBT_STATUS[r.status] ? r.status : 'pending',
+        notes: String(r.notes || '').trim().slice(0, 1000)
+      };
+      if (item.status === 'partial') item.paid = Math.min(parseFloat(r.paid) || 0, amt) / rate;
+      if (seen.has(sig(item))) return;
+      seen.add(sig(item));
+      list.push(item);
+      added++;
+    });
+    debtsSave(list);
+    added && list.forEach(d => { debtExpanded[debtPersonKey(d.person)] = true; });
+    renderDebts();
+    debtBackupStatus(added ? 'Imported ' + added + ' debt' + (added === 1 ? '' : 's') + '.' : 'Nothing new to import.');
+  }
+  document.getElementById('debtImport').addEventListener('click', () => {
+    const text = prompt('Paste the debts code:');
+    if (text) debtImport(text);
+  });
+  document.getElementById('debtExport').addEventListener('click', async () => {
+    const code = JSON.stringify(debtsAll().map(d => {
+      const r = { dir: d.dir, person: d.person, details: d.details, amount: d.entered_amount != null ? d.entered_amount : Number(d.amount),
+                  currency: d.entered_currency || 'CHF', date: d.date, status: d.status, notes: d.notes };
+      if (d.status === 'partial') r.paid = Number(((Number(d.paid) || 0) * (exchangeRates[r.currency] || 1)).toFixed(2));
+      return r;
+    }));
+    try { await navigator.clipboard.writeText(code); debtBackupStatus('Copied — paste it with Import on your other device.'); }
+    catch (e) { prompt('Copy this code:', code); }
+  });
 
   document.querySelectorAll('.debt-dir-btn').forEach(b => b.addEventListener('click', () => debtSetDirection(b.dataset.dir)));
   document.querySelectorAll('.debt-chip').forEach(b => b.addEventListener('click', () => {

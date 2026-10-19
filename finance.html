@@ -666,169 +666,6 @@ html, body { scrollbar-width: none; -ms-overflow-style: none; }
 .nw-activity-empty.hidden { display: none; }
 .nw-activity-list.hidden { display: none; }
 
-/* ============================================================
-   ORDERS — full-spec form (name, cost, ccy, from-category, date)
-   ============================================================ */
-.ord-add-card {
-  background: rgba(0,0,0,0.025) !important;
-  border: 1px solid rgba(0,0,0,0.05) !important;
-}
-.ord-add-eyebrow {
-  font-size: 10px; letter-spacing: 0.18em; font-weight: 800;
-  text-transform: uppercase; color: var(--text-tertiary);
-  font-family: var(--font-mono);
-  margin-bottom: 10px;
-}
-.ord-add-grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr 0.8fr 1.1fr 1.1fr auto;
-  gap: 6px; align-items: stretch;
-  padding: 4px;
-  background: rgba(255,255,255,0.92);
-  border-radius: 12px;
-}
-@media (max-width: 720px) {
-  .ord-add-grid { grid-template-columns: 1fr 1fr; }
-  .ord-add-grid .ord-input-name { grid-column: 1 / -1; }
-  .ord-add-grid .ord-add-btn    { grid-column: 1 / -1; }
-}
-.ord-input {
-  background: transparent; border: none; outline: none;
-  color: var(--text-primary);
-  font-family: inherit; font-size: 13px;
-  padding: 9px 10px;
-  min-width: 0;
-  -moz-appearance: textfield;
-}
-.ord-input::-webkit-outer-spin-button,
-.ord-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.ord-input::placeholder { color: var(--text-tertiary); }
-.ord-input-cost { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
-.ord-input-ccy, .ord-input-from {
-  background: rgba(0,0,0,0.04);
-  border-radius: 8px;
-  cursor: pointer; font-weight: 600;
-  appearance: none; -webkit-appearance: none;
-  text-align: center;
-}
-.ord-input-from { font-size: 12px; }
-.ord-add-btn {
-  padding: 0 14px;
-  background: linear-gradient(180deg, #34C759, #30B350);
-  color: #FFFFFF; border: none;
-  border-radius: 9px;
-  font-family: inherit; font-size: 13px; font-weight: 700;
-  cursor: pointer; white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(52,199,89,0.22);
-  transition: transform 0.12s, box-shadow 0.18s;
-}
-.ord-add-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(52,199,89,0.36); }
-.ord-add-btn:active { transform: scale(0.97); }
-.ord-add-preview {
-  margin-top: 10px; padding: 8px 12px;
-  background: rgba(52,199,89,0.06);
-  border: 1px solid rgba(52,199,89,0.14);
-  border-radius: 8px;
-  font-size: 12px; color: var(--text-secondary);
-  font-family: var(--font-mono);
-}
-.ord-add-preview.warn { background: rgba(255,149,0,0.08); border-color: rgba(255,149,0,0.20); color: #FF9500; }
-.ord-add-preview.bad  { background: rgba(255,59,48,0.08); border-color: rgba(255,59,48,0.20); color: #FF3B30; }
-
-.ord-section-h {
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin: 18px 4px 8px;
-}
-.ord-section-label {
-  font-size: 10px; letter-spacing: 0.18em; font-weight: 800;
-  text-transform: uppercase; color: var(--text-tertiary);
-  font-family: var(--font-mono);
-}
-.ord-section-count {
-  font-size: 11px; color: var(--text-tertiary);
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-}
-
-.ord-card {
-  background: rgba(0,0,0,0.025);
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  border-left: 3px solid var(--text-tertiary);
-  transition: background 0.15s;
-}
-.ord-card:hover { background: rgba(0,0,0,0.045); }
-.ord-card.cat-bank   { border-left-color: #0A84FF; }
-.ord-card.cat-stocks { border-left-color: #34C759; }
-.ord-card.cat-crypto { border-left-color: #FF9500; }
-.ord-card.cat-other  { border-left-color: #AF52DE; }
-.ord-card-h {
-  display: grid; grid-template-columns: 1fr auto auto;
-  gap: 12px; align-items: baseline;
-}
-.ord-card-name {
-  font-size: 15px; font-weight: 700;
-  color: var(--text-primary);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.ord-card-amt {
-  font-size: 17px; font-weight: 700;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-  font-family: var(--font-mono);
-  white-space: nowrap;
-}
-.ord-card-x {
-  background: transparent; border: 1px solid rgba(0,0,0,0.08);
-  color: var(--text-tertiary);
-  cursor: pointer; font-size: 14px;
-  padding: 4px 9px; border-radius: 6px;
-  font-family: inherit; line-height: 1;
-}
-.ord-card-x:hover { color: #FF3B30; }
-.ord-card-meta {
-  display: flex; flex-wrap: wrap; gap: 10px;
-  margin-top: 8px;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  color: var(--text-tertiary);
-}
-.ord-meta-pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 3px 9px; border-radius: 999px;
-  background: rgba(0,0,0,0.04);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-.ord-meta-pill.from { color: var(--text-secondary); }
-.ord-meta-pill.pct.good { color: #34C759; background: rgba(52,199,89,0.10); }
-.ord-meta-pill.pct.warn { color: #FF9500; background: rgba(255,149,0,0.10); }
-.ord-meta-pill.pct.bad  { color: #FF3B30; background: rgba(255,59,48,0.10); }
-.ord-meta-pill.date { color: var(--text-secondary); }
-.ord-meta-pill.date.soon { color: #FF9500; background: rgba(255,149,0,0.10); }
-.ord-meta-pill.date.today { color: #34C759; background: rgba(52,199,89,0.10); }
-.ord-meta-pill.date.past { color: #FF3B30; background: rgba(255,59,48,0.10); }
-
-.ord-empty-card {
-  text-align: center; padding: 32px 20px;
-  background: rgba(0,0,0,0.025);
-  border-radius: 14px;
-  border: 1px dashed rgba(0,0,0,0.08);
-}
-.ord-empty-card.hidden { display: none; }
-.ord-empty-icon {
-  font-size: 36px; margin-bottom: 8px;
-  opacity: 0.6;
-}
-.ord-empty-title {
-  font-size: 15px; font-weight: 700;
-  color: var(--text-primary); margin-bottom: 4px;
-}
-.ord-empty-sub {
-  font-size: 12px; color: var(--text-tertiary);
-  line-height: 1.5; max-width: 360px; margin: 0 auto;
-}
 
 /* ============================================================
    WISHLIST — premium polished UI
@@ -1143,131 +980,6 @@ html, body { scrollbar-width: none; -ms-overflow-style: none; }
 .finance-ticker.urgent .ticker-dot.active { background: #FF3B30; }
 
 /* ============================================================
-   DEDUCT-FROM-NW BUTTON & CHOOSER (in order cards)
-   ============================================================ */
-.ord-card-foot {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed rgba(0,0,0,0.06);
-  display: flex; flex-wrap: wrap; gap: 8px;
-  align-items: center;
-}
-.ord-deduct-btn {
-  background: linear-gradient(180deg, rgba(10,132,255,0.18), rgba(10,132,255,0.08));
-  border: 1px solid rgba(10,132,255,0.30);
-  color: #0A6CC2;
-  font-family: inherit;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 7px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.12s, background 0.18s, box-shadow 0.18s;
-}
-.ord-deduct-btn:hover {
-  background: linear-gradient(180deg, rgba(10,132,255,0.28), rgba(10,132,255,0.12));
-  box-shadow: 0 4px 14px rgba(10,132,255,0.22);
-  transform: translateY(-1px);
-}
-.ord-deduct-btn:active { transform: scale(0.97); }
-.ord-deducted-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #34C759;
-  background: rgba(52,199,89,0.10);
-  border: 1px solid rgba(52,199,89,0.20);
-  padding: 5px 10px;
-  border-radius: 999px;
-}
-.ord-deducted-pill::before {
-  content: '✓';
-  font-size: 12px;
-}
-.ord-deduct-undo {
-  background: transparent;
-  border: 1px solid rgba(0,0,0,0.10);
-  color: var(--text-tertiary);
-  font-family: inherit;
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.ord-deduct-undo:hover { color: var(--text-primary); border-color: rgba(0,0,0,0.20); }
-
-.ord-deduct-chooser {
-  margin-top: 10px;
-  padding: 12px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(10,132,255,0.18);
-  border-radius: 10px;
-}
-.ord-deduct-chooser-title {
-  font-size: 10px; letter-spacing: 0.18em; font-weight: 800;
-  text-transform: uppercase; color: var(--text-tertiary);
-  font-family: var(--font-mono);
-  margin-bottom: 8px;
-}
-.ord-deduct-options {
-  display: flex; flex-wrap: wrap; gap: 6px;
-  margin-bottom: 8px;
-}
-.ord-deduct-opt {
-  background: rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.06);
-  color: var(--text-primary);
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-}
-.ord-deduct-opt:hover {
-  background: rgba(10,132,255,0.10);
-  border-color: rgba(10,132,255,0.30);
-}
-.ord-deduct-opt small {
-  display: block;
-  font-size: 10px;
-  font-family: var(--font-mono);
-  color: var(--text-tertiary);
-  margin-top: 2px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-}
-.ord-deduct-opt.insufficient {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-.ord-deduct-opt.insufficient:hover {
-  background: rgba(0,0,0,0.04);
-  border-color: rgba(0,0,0,0.06);
-}
-.ord-deduct-cancel {
-  background: transparent;
-  border: none;
-  color: var(--text-tertiary);
-  font-family: inherit;
-  font-size: 11px;
-  cursor: pointer;
-  text-decoration: underline;
-}
-.ord-card.is-deducted { opacity: 0.85; }
-.ord-card.is-deducted .ord-card-name { text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: rgba(0,0,0,0.20); }
-.ord-meta-pill.pct.frozen { font-style: italic; }
-.ord-meta-pill.pct.frozen::after { content: ' · frozen'; opacity: 0.6; font-style: normal; }
-
-/* ============================================================
    SUBSCRIPTION ROW URGENT FLASH — fires when the renewal is
    ≤ 5 days away (including today / tomorrow / past).
    ============================================================ */
@@ -1311,7 +1023,7 @@ html, body { scrollbar-width: none; -ms-overflow-style: none; }
 }
 
 /* ============================================================
-   MOBILE: stack every "add" composer (Subs / Orders / Wishlist)
+   MOBILE: stack every "add" composer (Subs / Wishlist)
    vertically with full-width tappable fields + a big Add button.
    Without this the forms squeeze 5-6 controls into one row and
    become unusable on a phone.
@@ -1335,24 +1047,6 @@ html, body { scrollbar-width: none; -ms-overflow-style: none; }
     font-size: 15px !important;
   }
 
-  /* ---------- Orders add grid ---------- */
-  .ord-add-grid {
-    grid-template-columns: 1fr !important;
-    gap: 8px;
-    padding: 8px;
-  }
-  .ord-add-grid .ord-input,
-  .ord-add-grid .ord-add-btn {
-    width: 100%;
-    padding: 12px 14px !important;
-    font-size: 15px !important;
-    text-align: left;
-  }
-  .ord-add-grid .ord-input-cost { text-align: right; }
-  .ord-add-grid .ord-input-ccy,
-  .ord-add-grid .ord-input-from { text-align: center; }
-  .ord-add-grid .ord-add-btn { text-align: center; }
-
   /* ---------- Wishlist add row ---------- */
   .wish-add-row {
     flex-direction: column;
@@ -1373,7 +1067,7 @@ html, body { scrollbar-width: none; -ms-overflow-style: none; }
   .wish-add-row .wish-input-ccy { text-align: center; }
 
   /* ---------- Bigger close (×) and edit buttons in rows ---------- */
-  .ord-card-x, .wish-row-x {
+.wish-row-x {
     padding: 8px 12px !important;
     font-size: 16px !important;
   }
@@ -1558,12 +1252,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .quick-add { background: var(--raised); border-radius: 18px; }
 
 /* Sentence-case labels instead of spaced-out capitals */
-.bot-tab-label, .nw-activity-h, .nw-activity-meta, .nw-chart-head, .nw-donut-sub,
-.nw-stat-label, .ord-add-eyebrow, .ord-deduct-btn, .ord-deduct-chooser-title,
-.ord-deduct-undo, .ord-deducted-pill, .ord-section-label, .sub-auto-label,
-.ticker-item-days, .ticker-item-name, .ticker-tag, .wish-add-eyebrow, .wish-hero-eyebrow,
-.wish-hero-pct-label, .wish-row-pct, .wish-section-label, .empty-state, .sub-row-toggle,
-.label, .tag {
+.bot-tab-label, .nw-activity-h, .nw-activity-meta, .nw-chart-head, .nw-donut-sub, .nw-stat-label, .sub-auto-label, .ticker-item-days, .ticker-item-name, .ticker-tag, .wish-add-eyebrow, .wish-hero-eyebrow, .wish-hero-pct-label, .wish-row-pct, .wish-section-label, .empty-state, .sub-row-toggle, .label, .tag {
   text-transform: none;
   letter-spacing: normal;
 }
@@ -1584,7 +1273,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .section-title-text { display: inline-block; text-transform: lowercase; }
 .section-title-text::first-letter { text-transform: uppercase; }
 .section-title-text::after { content: '.'; }
-@media (max-width: 480px) { .section-title { font-size: 34px; } }
+@media (max-width: 480px) { .section-title { font-size: 34px; }
+}
 
 /* Big net-worth number */
 #netWorthTotal {
@@ -1606,7 +1296,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .bot-tab-label { font-size: 11px; font-weight: 600; }
 
 /* Primary actions: black pills */
-.ord-add-btn, .wish-add-btn, .quick-add-btn {
+.wish-add-btn, .quick-add-btn {
   background: var(--ink) !important;
   color: #FFFFFF !important;
   border: 0 !important;
@@ -1638,8 +1328,214 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .bot-tab.active { background: var(--raised); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); }
 .bot-tab-icon { font-size: 14px; }
 .bot-tab-label { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
-@media (max-width: 380px) { .bot-tab-icon { display: none; } }
+@media (max-width: 380px) { .bot-tab-icon { display: none; }
+}
 .shell { padding-bottom: 40px; }
+
+/* ===== Debts ===== */
+.nw-liquid { margin-top: 8px; font-size: 14px; color: var(--ink-2); }
+.nw-liquid strong { color: var(--ink); font-weight: 600; }
+.nw-liquid-note { color: var(--ink-3); }
+
+.debt-summary { padding: 22px; }
+.debt-net-label { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.debt-net {
+  margin-top: 4px;
+  font-size: 48px; font-weight: 500;
+  letter-spacing: -0.045em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.debt-net.is-in { color: #248A3D; }
+.debt-net.is-out { color: var(--red); }
+.debt-net-sub { margin-top: 6px; font-size: 14px; color: var(--ink-2); }
+.debt-bar {
+  display: flex; gap: 3px;
+  height: 8px; margin: 18px 0 14px;
+  border-radius: 999px; overflow: hidden;
+  background: var(--surface-2);
+}
+.debt-bar[hidden] { display: none; }
+.debt-bar-in { background: var(--green); border-radius: 999px; }
+.debt-bar-out { background: var(--red); border-radius: 999px; }
+.debt-split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.debt-split-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--raised);
+}
+.debt-dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.debt-dot-in { background: var(--green); }
+.debt-dot-out { background: var(--red); }
+.debt-split-label { font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.debt-split-val { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.debt-filters { display: flex; gap: 6px; margin: 4px 0 12px; }
+.debt-chip {
+  padding: 7px 14px;
+  border: 0; border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer;
+}
+.debt-chip.active { background: var(--ink); color: #FFFFFF; }
+
+.debt-person {
+  margin-bottom: 8px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+.debt-person-head {
+  width: 100%;
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  border: 0; background: transparent;
+  font-family: inherit; text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.debt-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #FFFFFF; font-size: 14px; font-weight: 700; letter-spacing: 0.02em;
+}
+.debt-person-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.debt-person-name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; overflow-wrap: anywhere; }
+.debt-person-sub { font-size: 13px; color: var(--ink-2); }
+.debt-person-bal { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; flex-shrink: 0; }
+.debt-person-amt { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.debt-person-amt.is-in { color: #248A3D; }
+.debt-person-amt.is-out { color: var(--red); }
+.debt-person-lbl { font-size: 12px; color: var(--ink-2); }
+.debt-chev { font-size: 22px; color: var(--ink-3); transition: transform 0.2s; margin-left: 2px; }
+.debt-person.is-open .debt-chev { transform: rotate(90deg); }
+.debt-person-body { padding: 0 12px 12px; }
+.debt-person-sum {
+  margin: 4px 4px 8px;
+  font-size: 13px; color: var(--ink-2);
+}
+.debt-person-add {
+  width: 100%;
+  padding: 11px;
+  border: 0; border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  cursor: pointer;
+}
+
+.debt-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 14px;
+  margin-bottom: 6px;
+  border-radius: var(--radius-md);
+  background: var(--raised);
+}
+.debt-item.is-settled { opacity: 0.6; }
+.debt-item-icon {
+  width: 30px; height: 30px; border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700;
+}
+.debt-item-icon.is-in { background: rgba(52, 199, 89, 0.14); color: #248A3D; }
+.debt-item-icon.is-out { background: rgba(255, 59, 48, 0.12); color: var(--red); }
+.debt-item-body { flex: 1; min-width: 0; }
+.debt-item-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.debt-item.is-settled .debt-item-title { text-decoration: line-through; text-decoration-color: var(--ink-3); }
+.debt-item-meta { font-size: 12px; color: var(--ink-2); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.debt-item-notes {
+  margin-top: 6px; padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 13px; line-height: 1.4; color: var(--ink-2);
+  white-space: pre-wrap;
+}
+.debt-item-actions { display: flex; gap: 14px; margin-top: 6px; }
+.debt-item-actions button {
+  padding: 0; border: 0; background: none;
+  font-family: inherit; font-size: 12px; font-weight: 600;
+  color: var(--ink-2); cursor: pointer;
+}
+.debt-item-actions button.is-danger:hover { color: var(--red); }
+.debt-item-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.debt-item-amt { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.debt-item-amt.is-in { color: #248A3D; }
+.debt-item-amt.is-out { color: var(--red); }
+.debt-status {
+  -webkit-appearance: none; appearance: none;
+  padding: 4px 10px;
+  border: 0; border-radius: 999px;
+  font-family: inherit; font-size: 12px; font-weight: 600;
+  text-align: center; text-align-last: center;
+  cursor: pointer;
+}
+.debt-status-pending  { background: rgba(255, 149, 0, 0.15); color: #B25E00; }
+.debt-status-invoiced { background: rgba(10, 132, 255, 0.12); color: #0A6CC2; }
+.debt-status-partial  { background: rgba(175, 82, 222, 0.14); color: #8E3BB8; }
+.debt-status-settled  { background: rgba(52, 199, 89, 0.14); color: #248A3D; }
+
+.debt-none, .debt-empty { text-align: center; color: var(--ink-3); font-size: 14px; padding: 18px 0; }
+.debt-empty[hidden] { display: none; }
+.debt-empty-icon { font-size: 30px; }
+.debt-empty-title { font-size: 16px; font-weight: 600; color: var(--ink); margin-top: 6px; }
+.debt-empty-sub { margin-top: 2px; }
+
+.debt-form { margin-top: 14px; }
+.debt-form-title { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px; }
+.debt-dir {
+  display: flex; gap: 2px; padding: 3px; margin-bottom: 10px;
+  border-radius: 12px; background: var(--surface-2);
+}
+.debt-dir-btn {
+  flex: 1; padding: 8px;
+  border: 0; border-radius: 10px;
+  background: transparent; color: var(--ink-2);
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  cursor: pointer;
+}
+.debt-dir-btn.active { background: var(--raised); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); }
+.debt-dir-btn.active[data-dir="in"] { color: #248A3D; }
+.debt-dir-btn.active[data-dir="out"] { color: var(--red); }
+.debt-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.debt-input {
+  width: 100%; min-width: 0;
+  padding: 11px 14px;
+  border: 1px solid transparent; border-radius: 12px;
+  background: var(--raised); color: var(--ink);
+  font-family: inherit; font-size: 16px;
+  outline: none;
+}
+.debt-input:focus { border-color: var(--ink-3); }
+.debt-input[hidden] { display: none; }
+.debt-input-wide { grid-column: 1 / -1; }
+textarea.debt-input { resize: vertical; line-height: 1.4; }
+select.debt-input { -webkit-appearance: none; appearance: none; }
+.debt-form-actions { display: flex; gap: 8px; margin-top: 12px; }
+.debt-save {
+  flex: 1; padding: 13px;
+  border: 0; border-radius: 999px;
+  background: var(--ink); color: #FFFFFF;
+  font-family: inherit; font-size: 15px; font-weight: 600;
+  cursor: pointer;
+}
+.debt-cancel {
+  padding: 13px 20px;
+  border: 0; border-radius: 999px;
+  background: var(--surface-2); color: var(--ink);
+  font-family: inherit; font-size: 15px; font-weight: 600;
+  cursor: pointer;
+}
+@media (max-width: 420px) {
+  .debt-net { font-size: 40px; }
+  .debt-split-val { font-size: 15px; }
+  .debt-split-item { padding: 12px; }
+}
 </style>
 </head>
 <body>
@@ -1660,9 +1556,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     <span class="bot-tab-icon">🔁</span>
     <span class="bot-tab-label">Subs</span>
   </button>
-  <button class="bot-tab" data-tab="incoming">
-    <span class="bot-tab-icon">📦</span>
-    <span class="bot-tab-label">Orders</span>
+  <button class="bot-tab" data-tab="debts">
+    <span class="bot-tab-icon">🤝</span>
+    <span class="bot-tab-label">Debts</span>
   </button>
   <button class="bot-tab" data-tab="wish">
     <span class="bot-tab-icon">🎯</span>
@@ -1688,6 +1584,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em;font-weight:500">Total net worth</div>
         <div id="netWorthTotal" style="font-size:34px;font-weight:700;color:var(--text-primary);line-height:1.05;margin-top:2px">€0</div>
         <div id="netWorthBreakdown" style="font-size:11px;color:var(--text-tertiary);margin-top:4px"></div>
+        <div id="netWorthLiquid" class="nw-liquid" hidden></div>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
         <select id="netWorthCurrency" style="background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;font-family:inherit;cursor:pointer">
@@ -1863,42 +1760,77 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 </div>
 
 <!-- ===== INCOMING ORDERS ===== -->
-<div class="section" data-section="incoming">
+<!-- ===== DEBTS ===== -->
+<div class="section" data-section="debts">
   <div class="section-title">
-    <span class="section-title-text">INCOMING ORDERS</span>
+    <span class="section-title-text">Debts</span>
   </div>
 
-  <!-- Add card with cost + currency + from-category + arrival date -->
-  <div class="card ord-add-card">
-    <div class="ord-add-eyebrow">+ NEW ORDER</div>
-    <div class="ord-add-grid">
-      <input type="text"   id="ordName"   placeholder="Item (e.g. New iPhone)" class="ord-input ord-input-name">
-      <input type="number" id="ordCost"   placeholder="Cost" step="0.01" class="ord-input ord-input-cost">
-      <select id="ordCurrency" class="ord-input ord-input-ccy">
+  <!-- Summary: who owes you, what you owe, the net -->
+  <div class="card debt-summary">
+    <div class="debt-net-label">Net position</div>
+    <div class="debt-net" id="debtNet">EUR 0</div>
+    <div class="debt-net-sub" id="debtNetSub">Nothing open.</div>
+    <div class="debt-bar" id="debtBar"><span class="debt-bar-in" id="debtBarIn"></span><span class="debt-bar-out" id="debtBarOut"></span></div>
+    <div class="debt-split">
+      <div class="debt-split-item">
+        <span class="debt-dot debt-dot-in"></span>
+        <div><div class="debt-split-label">Owed to you</div><div class="debt-split-val" id="debtOwedToMe">EUR 0</div></div>
+      </div>
+      <div class="debt-split-item">
+        <span class="debt-dot debt-dot-out"></span>
+        <div><div class="debt-split-label">You owe</div><div class="debt-split-val" id="debtIOwe">EUR 0</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <div class="debt-filters" id="debtFilters">
+    <button type="button" class="debt-chip active" data-filter="open">Open</button>
+    <button type="button" class="debt-chip" data-filter="settled">Settled</button>
+    <button type="button" class="debt-chip" data-filter="all">All</button>
+  </div>
+
+  <!-- One card per person / entity -->
+  <div id="debtPeople"></div>
+  <div class="debt-empty" id="debtEmpty">
+    <div class="debt-empty-icon">🤝</div>
+    <div class="debt-empty-title">No debts yet</div>
+    <div class="debt-empty-sub">Add what someone owes you, or what you owe them, below.</div>
+  </div>
+
+  <!-- Add / edit -->
+  <div class="card debt-form" id="debtForm">
+    <div class="debt-form-title" id="debtFormTitle">Add a debt</div>
+    <div class="debt-dir" role="radiogroup" aria-label="Direction">
+      <button type="button" class="debt-dir-btn active" data-dir="in">They owe me</button>
+      <button type="button" class="debt-dir-btn" data-dir="out">I owe them</button>
+    </div>
+    <div class="debt-fields">
+      <input type="text" id="debtPerson" class="debt-input debt-input-wide" placeholder="Person or entity (e.g. 351 Snow Society)" list="debtPeopleList" autocomplete="off">
+      <datalist id="debtPeopleList"></datalist>
+      <input type="text" id="debtDetails" class="debt-input debt-input-wide" placeholder="Details (e.g. Esade trip commission)">
+      <input type="number" id="debtAmount" class="debt-input" placeholder="Amount" step="0.01" inputmode="decimal">
+      <select id="debtCurrency" class="debt-input">
+        <option value="EUR" selected>EUR</option>
         <option value="CHF">CHF</option>
         <option value="USD">USD</option>
-        <option value="EUR" selected>EUR</option>
         <option value="GBP">GBP</option>
       </select>
-      <select id="ordFromCat" class="ord-input ord-input-from" title="Which net worth account this comes out of">
-        <option value="">No accounts yet</option>
+      <input type="date" id="debtDate" class="debt-input">
+      <select id="debtStatus" class="debt-input">
+        <option value="pending">Pending</option>
+        <option value="invoiced">Invoiced</option>
+        <option value="partial">Partly paid</option>
+        <option value="settled">Settled</option>
       </select>
-      <label class="date-field ord-input-date" title="Expected arrival"><span class="date-emoji" aria-hidden="true">📅</span><input type="date" id="ordArrival" /></label>
-      <button class="ord-add-btn" id="ordAddBtn" onclick="window.__addOrder && window.__addOrder()">+ Add Order</button>
+      <input type="number" id="debtPaid" class="debt-input debt-input-wide" placeholder="Paid so far" step="0.01" inputmode="decimal" hidden>
+      <textarea id="debtNotes" class="debt-input debt-input-wide" rows="2" placeholder="Notes (optional)"></textarea>
     </div>
-    <div class="ord-add-preview" id="ordAddPreview">Type a cost — preview will show what % of net worth it takes.</div>
-  </div>
-
-  <!-- Items list -->
-  <div class="ord-section-h">
-    <span class="ord-section-label">ITEMS ON THE WAY</span>
-    <span class="ord-section-count" id="ordCount">0 items</span>
-  </div>
-  <div id="ordList"></div>
-  <div class="ord-empty-card" id="ordEmpty">
-    <div class="ord-empty-icon">📦</div>
-    <div class="ord-empty-title">Nothing on the way</div>
-    <div class="ord-empty-sub">Log an order above. Pick the account it comes out of, the expected arrival date, and the dashboard will show what % of your net worth it costs.</div>
+    <div class="debt-form-actions">
+      <button type="button" class="debt-save" id="debtSave">+ Add</button>
+      <button type="button" class="debt-cancel" id="debtCancel" hidden>Cancel</button>
+    </div>
   </div>
 </div>
 
@@ -1975,21 +1907,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   // ============================================================
-  // ORD_FROM_META — must be hoisted to the top of the IIFE.
-  // renderOrders runs as part of the FIRST renderAllNetWorth call
-  // (long before the ORDERS section is reached) and will TDZ-crash
-  // the whole script if any saved orders trigger the render path
-  // and ORD_FROM_META hasn't been initialized yet.
+  // DEBTS — constants and state live at the top of the IIFE because
+  // renderDebts runs inside the very first renderAllNetWorth call,
+  // before the DEBTS section further down is reached.
   // ============================================================
-  const ORD_FROM_META = {
-    bank:   { name: 'Bank',   color: '#0A84FF' },
-    stocks: { name: 'Stocks', color: '#34C759' },
-    crypto: { name: 'Crypto', color: '#FF9500' },
-    other:  { name: 'Other',  color: '#AF52DE' }
+  const DEBTS_KEY = 'debts_v1';
+  const DEBT_STATUS = {
+    pending:  { label: 'Pending' },
+    invoiced: { label: 'Invoiced' },
+    partial:  { label: 'Partly paid' },
+    settled:  { label: 'Settled' }
   };
+  const DEBT_AVATAR_COLORS = ['#0A84FF', '#34C759', '#FF9500', '#AF52DE', '#FF2D55', '#5AC8FA', '#A2845E'];
+  var debtFilter = 'open';
+  var debtDirection = 'in';
+  var debtEditingId = null;
+  var debtExpanded = {};
 
   // ============================================================
-  // BOTTOM TABS — switch between Net Worth / Subs / Orders.
+  // SECTION TABS — switch between Net Worth / Subs / Debts / Wishlist.
   // Active tab persisted in localStorage.
   // ============================================================
   const TAB_KEY = 'finance_active_tab';
@@ -2006,7 +1942,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   tabs.forEach(b => b.addEventListener('click', () => setActiveTab(b.dataset.tab)));
   const savedTab = storeGet(TAB_KEY);
-  setActiveTab(savedTab && ['net','subs','incoming','wish'].includes(savedTab) ? savedTab : 'net');
+  setActiveTab(savedTab && ['net','subs','debts','wish'].includes(savedTab) ? savedTab : 'net');
 
   // ============================================================
   // NET WORTH (copied from the main dashboard, verbatim logic)
@@ -2167,8 +2103,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     renderAllocationDonut(sliceTotals, grand);
     renderActivity();
     if (typeof renderWishlist === 'function') renderWishlist();
-    if (typeof renderOrders   === 'function') renderOrders();
-    if (typeof updateOrdPreview === 'function') updateOrdPreview();
+    if (typeof renderDebts === 'function') renderDebts();
   }
 
   // ============================================================
@@ -2646,7 +2581,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   // ============================================================
   // Build/refresh the From-account dropdown in the subs add form,
-  // mirroring the same source-of-truth used by the orders form.
+  // listing the user's real net-worth accounts.
   // ============================================================
   function populateSubFromSelect() {
     const sel = document.getElementById('subFromCat');
@@ -2980,40 +2915,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     if (t.id === 'wishAddBtn') { e.preventDefault(); doWishAdd(); }
   });
 
-  // ============================================================
-  // INCOMING ORDERS — full-spec: name, cost (CHF base), currency,
-  // fromCat, expectedDate, ts. Stored under 'incoming_orders'.
-  // (ORD_FROM_META is declared at the top of this IIFE — see the
-  // header — because renderOrders runs as part of the very first
-  // renderAllNetWorth, which fires *before* this section is reached.
-  // Declaring it here would put it in the TDZ for that first call
-  // and crash the whole script if any orders were already saved.)
-  // ============================================================
-  function ordPctClass(pct) {
-    if (pct < 5)  return 'good';
-    if (pct < 25) return 'warn';
-    return 'bad';
-  }
-  function ordFmtArrival(iso) {
-    if (!iso) return null;
-    const isoSafe = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? iso + 'T00:00' : iso;
-    const d = new Date(isoSafe);
-    if (isNaN(d)) return null;
-    const now = new Date();
-    const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const diffDays = Math.round((dayStart - todayStart) / 86400000);
-    const dateLabel = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    let cls = '', prefix = '';
-    if (diffDays < 0)        { cls = 'past';  prefix = 'late · '; }
-    else if (diffDays === 0) { cls = 'today'; prefix = 'today · '; }
-    else if (diffDays === 1) { cls = 'soon';  prefix = 'tomorrow · '; }
-    else if (diffDays <= 7)  { cls = 'soon';  prefix = 'in ' + diffDays + 'd · '; }
-    return { cls, label: prefix + dateLabel };
-  }
   // Build the flat list of every NW account (across all 4 categories) so
-  // both the "From" dropdown on the add form AND the deduct chooser share
-  // the same source of truth.
+  // the subscriptions "From" dropdown can offer the user's real accounts.
   function listAllNwAccounts() {
     const out = [];
     NW_CATS.forEach(cat => {
@@ -3029,297 +2932,369 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     });
     return out;
   }
-  // Refill the order add-form's "From" select with the user's actual NW
-  // accounts, preserving the current selection if that account still exists.
-  function populateOrdFromSelect() {
-    const sel = document.getElementById('ordFromCat');
-    if (!sel) return;
-    const accounts = listAllNwAccounts();
-    const prev = sel.value;
-    const ICONS = { bank: '🏦', stocks: '📈', crypto: '🪙', other: '💼' };
-    if (!accounts.length) {
-      sel.innerHTML = '<option value="">No accounts yet</option>';
-      sel.disabled = true;
-      return;
-    }
-    sel.disabled = false;
-    sel.innerHTML = accounts.map(a => {
-      const value = a.catKey + '::' + a.itemName;
-      return '<option value="' + value + '">' + ICONS[a.catKey] + ' ' + escapeHtml(a.itemName) + '</option>';
-    }).join('');
-    if (prev && [...sel.options].some(o => o.value === prev)) sel.value = prev;
-  }
-  function renderOrders() {
-    const list = document.getElementById('ordList');
-    const empty = document.getElementById('ordEmpty');
-    const count = document.getElementById('ordCount');
-    if (!list) return;
-    // Refresh the "From" dropdown so newly added/renamed/deleted NW accounts show up.
-    populateOrdFromSelect();
-    const items = storeGet('incoming_orders') || [];
-    const grand = nwGrandCHF();
-    if (count) count.textContent = items.length + (items.length === 1 ? ' item' : ' items');
-    // Always clear before painting — earlier this re-rendered as an APPEND
-    // (so every NW change duplicated the cards). Now it's an idempotent paint.
-    list.innerHTML = '';
-    if (!items.length) {
-      if (empty) empty.classList.remove('hidden');
-      return;
-    }
-    if (empty) empty.classList.add('hidden');
-    // Sort: arrival date soonest first, undated last
-    items.slice().sort((a, b) => {
-      if (!a.date) return 1;
-      if (!b.date) return -1;
-      return a.date.localeCompare(b.date);
-    }).forEach(o => {
-      const cost = Number(o.amount) || 0;
-      const isDeducted = !!o.deductedAt;
-      // Use frozen pct once deducted; live pct otherwise.
-      let pct, pctText, pctCls;
-      if (isDeducted && typeof o.pctAtDeduction === 'number') {
-        pct = o.pctAtDeduction;
-        pctText = pct.toFixed(2) + '% of NW';
-        pctCls = ordPctClass(pct) + ' frozen';
-      } else if (grand > 0) {
-        pct = (cost / grand) * 100;
-        pctText = pct.toFixed(2) + '% of NW';
-        pctCls = ordPctClass(pct);
-      } else {
-        pct = null;
-        pctText = '— of NW';
-        pctCls = '';
-      }
-      const fromMeta = ORD_FROM_META[o.fromCat] || ORD_FROM_META.bank;
-      const fromAccountLabel = o.fromAccount ? escapeHtml(o.fromAccount) : fromMeta.name;
-      const arr = ordFmtArrival(o.date);
-      const arrHtml = arr
-        ? '<span class="ord-meta-pill date ' + arr.cls + '">' + arr.label + '</span>'
-        : '<span class="ord-meta-pill date">no arrival</span>';
-      const row = document.createElement('div');
-      row.className = 'ord-card cat-' + (o.fromCat || 'bank') + (isDeducted ? ' is-deducted' : '');
-      const footHtml = isDeducted
-        ? '<div class="ord-card-foot">'
-          +   '<span class="ord-deducted-pill">Deducted from ' + escapeHtml(o.deductedFrom && o.deductedFrom.name ? o.deductedFrom.name : fromAccountLabel) + '</span>'
-          +   '<button class="ord-deduct-undo" data-undo-id="' + o.id + '">Undo</button>'
-          + '</div>'
-        : '<div class="ord-card-foot">'
-          +   '<button class="ord-deduct-btn" data-deduct-id="' + o.id + '">− Deduct from net worth</button>'
-          + '</div>';
-      row.innerHTML =
-          '<div class="ord-card-h">'
-        +   '<div class="ord-card-name">' + escapeHtml(o.name) + '</div>'
-        +   '<div class="ord-card-amt">' + fmtMoney(cost) + '</div>'
-        +   '<button class="ord-card-x" data-id="' + o.id + '" aria-label="Remove">×</button>'
-        + '</div>'
-        + '<div class="ord-card-meta">'
-        +   '<span class="ord-meta-pill from">from · ' + fromAccountLabel + '</span>'
-        +   '<span class="ord-meta-pill pct ' + pctCls + '">' + pctText + '</span>'
-        +   arrHtml
-        + '</div>'
-        + footHtml;
-      list.appendChild(row);
-    });
-    // Wire up delete (×), deduct, and undo buttons.
-    list.querySelectorAll('.ord-card-x').forEach(b => {
-      b.addEventListener('click', () => {
-        const id = b.dataset.id;
-        const arr = (storeGet('incoming_orders') || []).filter(x => x.id !== id);
-        storeSet('incoming_orders', arr);
-        renderOrders();
-      });
-    });
-    list.querySelectorAll('.ord-deduct-btn').forEach(b => {
-      b.addEventListener('click', () => openDeductChooser(b.dataset.deductId, b.closest('.ord-card')));
-    });
-    list.querySelectorAll('.ord-deduct-undo').forEach(b => {
-      b.addEventListener('click', () => undoDeduct(b.dataset.undoId));
-    });
-  }
+
   // ============================================================
-  // DEDUCT — open the inline chooser of NW accounts. Picking one
-  // subtracts the order amount from that account (in CHF), logs the
-  // activity, freezes the order's % at the moment of deduction, and
-  // marks the order as deducted (with no further % updates).
+  // DEBTS — money owed to you / by you, per person or entity.
+  // Each item: { id, dir: 'in' (they owe me) | 'out' (I owe them),
+  //   person, details, amount (CHF base), entered_amount,
+  //   entered_currency, paid (CHF base, for 'partial'), date, status,
+  //   notes, ts }. Stored under 'debts_v1'. Open items feed the
+  //   "liquid" net worth line on the Net Worth tab.
   // ============================================================
-  function openDeductChooser(orderId, cardEl) {
-    if (!cardEl) return;
-    // Toggle: if a chooser already exists in this card, remove it.
-    const existing = cardEl.querySelector('.ord-deduct-chooser');
-    if (existing) { existing.remove(); return; }
-    const order = (storeGet('incoming_orders') || []).find(x => x.id === orderId);
-    if (!order) return;
-    const accounts = listAllNwAccounts();
-    if (!accounts.length) {
-      alert('Add at least one net worth account before deducting.');
-      return;
+  function debtsAll() { return storeGet(DEBTS_KEY) || []; }
+  function debtsSave(list) { storeSet(DEBTS_KEY, list); }
+
+  function debtOutstanding(d) {
+    if (d.status === 'settled') return 0;
+    const amt = Number(d.amount) || 0;
+    if (d.status === 'partial') return Math.max(0, amt - (Number(d.paid) || 0));
+    return amt;
+  }
+  function debtTotals(list) {
+    let owedToMe = 0, iOwe = 0;
+    list.forEach(d => {
+      const o = debtOutstanding(d);
+      if (d.dir === 'out') iOwe += o; else owedToMe += o;
+    });
+    return { owedToMe, iOwe, net: owedToMe - iOwe };
+  }
+  function debtSigned(amountCHF, dir) {
+    return (dir === 'out' ? '−' : '+') + fmtMoney(Math.abs(amountCHF));
+  }
+  function debtPersonKey(name) { return String(name || '').trim().toLowerCase(); }
+  function debtInitials(name) {
+    const parts = String(name || '?').trim().split(/\s+/).filter(w => /[A-Za-z0-9À-ÿ]/.test(w));
+    const letters = parts.length > 1 ? parts[0][0] + parts[1][0] : (parts[0] || '?').slice(0, 2);
+    return letters.toUpperCase();
+  }
+  function debtAvatarColor(name) {
+    let h = 0;
+    for (const c of debtPersonKey(name)) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+    return DEBT_AVATAR_COLORS[h % DEBT_AVATAR_COLORS.length];
+  }
+  function debtFmtDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso + 'T12:00:00');
+    return isNaN(d) ? '' : d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function debtToday() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  // Liquid net worth = net worth + what's owed to you − what you owe.
+  function renderLiquidNetWorth() {
+    const el = document.getElementById('netWorthLiquid');
+    if (!el) return;
+    const t = debtTotals(debtsAll());
+    if (!t.owedToMe && !t.iOwe) { el.hidden = true; return; }
+    el.hidden = false;
+    el.innerHTML = '';
+    const label = document.createElement('span');
+    label.textContent = 'Liquid net worth ';
+    const val = document.createElement('strong');
+    val.textContent = fmtMoney(nwGrandCHF() + t.net);
+    const note = document.createElement('span');
+    note.className = 'nw-liquid-note';
+    note.textContent = ' · ' + (t.net >= 0 ? '+' : '−') + fmtMoney(Math.abs(t.net)) + ' in open debts';
+    el.appendChild(label); el.appendChild(val); el.appendChild(note);
+  }
+
+  function renderDebtSummary(list) {
+    const t = debtTotals(list);
+    document.getElementById('debtNet').textContent = (t.net < 0 ? '−' : '') + fmtMoney(Math.abs(t.net));
+    document.getElementById('debtNet').className = 'debt-net' + (t.net > 0 ? ' is-in' : t.net < 0 ? ' is-out' : '');
+    document.getElementById('debtNetSub').textContent =
+      !t.owedToMe && !t.iOwe ? 'Nothing open.'
+      : t.net > 0 ? 'Owed to you, after what you owe.'
+      : t.net < 0 ? 'You owe, after what you’re owed.'
+      : 'What you’re owed and what you owe cancel out.';
+    document.getElementById('debtOwedToMe').textContent = fmtMoney(t.owedToMe);
+    document.getElementById('debtIOwe').textContent = fmtMoney(t.iOwe);
+    const sum = t.owedToMe + t.iOwe;
+    document.getElementById('debtBar').hidden = !sum;
+    document.getElementById('debtBarIn').style.width = (sum ? t.owedToMe / sum * 100 : 0) + '%';
+    document.getElementById('debtBarOut').style.width = (sum ? t.iOwe / sum * 100 : 0) + '%';
+  }
+
+  function debtStatusSelect(d) {
+    const sel = document.createElement('select');
+    sel.className = 'debt-status debt-status-' + d.status;
+    sel.setAttribute('aria-label', 'Status');
+    Object.keys(DEBT_STATUS).forEach(k => {
+      const o = document.createElement('option');
+      o.value = k; o.textContent = DEBT_STATUS[k].label;
+      if (k === d.status) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener('click', e => e.stopPropagation());
+    sel.addEventListener('change', () => {
+      if (sel.value === 'partial') { debtStartEdit(d.id, 'partial'); sel.value = d.status; return; }
+      const list = debtsAll();
+      const it = list.find(x => x.id === d.id);
+      if (!it) return;
+      it.status = sel.value;
+      if (it.status !== 'partial') delete it.paid;
+      debtsSave(list);
+      renderDebts();
+    });
+    return sel;
+  }
+
+  function debtItemRow(d) {
+    const row = document.createElement('div');
+    row.className = 'debt-item' + (d.status === 'settled' ? ' is-settled' : '');
+
+    const icon = document.createElement('span');
+    icon.className = 'debt-item-icon ' + (d.dir === 'out' ? 'is-out' : 'is-in');
+    icon.textContent = d.dir === 'out' ? '↗' : '↙';
+    icon.title = d.dir === 'out' ? 'You owe' : 'Owed to you';
+    row.appendChild(icon);
+
+    const body = document.createElement('div');
+    body.className = 'debt-item-body';
+    const title = document.createElement('div');
+    title.className = 'debt-item-title';
+    title.textContent = d.details || (d.dir === 'out' ? 'You owe' : 'Owed to you');
+    body.appendChild(title);
+    const metaBits = [debtFmtDate(d.date)];
+    if (d.status === 'partial') metaBits.push(fmtMoney(Number(d.paid) || 0) + ' of ' + fmtMoney(Number(d.amount) || 0) + ' paid');
+    if (d.entered_currency && d.entered_amount != null && currencyEl && d.entered_currency !== currencyEl.value) {
+      metaBits.push(d.entered_currency + ' ' + Number(d.entered_amount).toLocaleString('en-US', { maximumFractionDigits: 2 }));
     }
-    const ICONS = { bank: '🏦', stocks: '📈', crypto: '🪙', other: '💼' };
-    const cost = Number(order.amount) || 0;
-    const optsHtml = accounts.map(a => {
-      const insufficient = a.amountCHF < cost - 0.005;
-      const cls = 'ord-deduct-opt' + (insufficient ? ' insufficient' : '');
-      return '<button class="' + cls + '" '
-        + 'data-cat="' + a.catKey + '" '
-        + 'data-name="' + escapeHtml(a.itemName) + '" '
-        + (insufficient ? 'data-insuf="1" ' : '')
-        + '>'
-        + ICONS[a.catKey] + ' ' + escapeHtml(a.itemName)
-        + '<small>' + fmtMoney(a.amountCHF) + (insufficient ? ' · not enough' : ' available') + '</small>'
-        + '</button>';
-    }).join('');
-    const chooser = document.createElement('div');
-    chooser.className = 'ord-deduct-chooser';
-    chooser.innerHTML =
-        '<div class="ord-deduct-chooser-title">Deduct ' + fmtMoney(cost) + ' from…</div>'
-      + '<div class="ord-deduct-options">' + optsHtml + '</div>'
-      + '<button class="ord-deduct-cancel" type="button">cancel</button>';
-    cardEl.appendChild(chooser);
-    chooser.querySelectorAll('.ord-deduct-opt').forEach(b => {
-      b.addEventListener('click', () => {
-        if (b.dataset.insuf === '1') {
-          if (!confirm('That account doesn\'t have enough — deduct anyway? (it will go negative)')) return;
+    const meta = document.createElement('div');
+    meta.className = 'debt-item-meta';
+    meta.textContent = metaBits.filter(Boolean).join(' · ');
+    body.appendChild(meta);
+    if (d.notes) {
+      const notes = document.createElement('div');
+      notes.className = 'debt-item-notes';
+      notes.textContent = d.notes;
+      body.appendChild(notes);
+    }
+    const actions = document.createElement('div');
+    actions.className = 'debt-item-actions';
+    const edit = document.createElement('button');
+    edit.type = 'button'; edit.textContent = 'Edit';
+    edit.addEventListener('click', () => debtStartEdit(d.id));
+    const del = document.createElement('button');
+    del.type = 'button'; del.textContent = 'Delete'; del.className = 'is-danger';
+    del.addEventListener('click', () => {
+      if (!confirm('Delete “' + (d.details || 'this debt') + '”?')) return;
+      debtsSave(debtsAll().filter(x => x.id !== d.id));
+      renderDebts();
+    });
+    actions.appendChild(edit); actions.appendChild(del);
+    body.appendChild(actions);
+    row.appendChild(body);
+
+    const side = document.createElement('div');
+    side.className = 'debt-item-side';
+    const amt = document.createElement('div');
+    amt.className = 'debt-item-amt ' + (d.dir === 'out' ? 'is-out' : 'is-in');
+    amt.textContent = debtSigned(d.status === 'partial' ? debtOutstanding(d) : Number(d.amount) || 0, d.dir);
+    side.appendChild(amt);
+    side.appendChild(debtStatusSelect(d));
+    row.appendChild(side);
+    return row;
+  }
+
+  function renderDebts() {
+    const list = debtsAll();
+    renderDebtSummary(list);
+    renderLiquidNetWorth();
+
+    // People suggestions for the form
+    const dl = document.getElementById('debtPeopleList');
+    const names = {};
+    list.forEach(d => { names[debtPersonKey(d.person)] = d.person; });
+    dl.innerHTML = '';
+    Object.values(names).sort().forEach(n => { const o = document.createElement('option'); o.value = n; dl.appendChild(o); });
+
+    // Group by person
+    const groups = {};
+    list.forEach(d => {
+      const k = debtPersonKey(d.person);
+      if (!groups[k]) groups[k] = { name: d.person, items: [] };
+      groups[k].items.push(d);
+    });
+    const people = Object.values(groups).map(g => {
+      const t = debtTotals(g.items);
+      const open = g.items.filter(d => d.status !== 'settled');
+      const latest = g.items.reduce((m, d) => (d.date || '') > m ? (d.date || '') : m, '');
+      return Object.assign(g, { totals: t, openCount: open.length, latest });
+    }).filter(g => debtFilter === 'all' || (debtFilter === 'open' ? g.openCount > 0 : g.items.some(d => d.status === 'settled')))
+      .sort((a, b) => Math.abs(b.totals.net) - Math.abs(a.totals.net) || a.name.localeCompare(b.name));
+
+    const wrap = document.getElementById('debtPeople');
+    wrap.innerHTML = '';
+    document.getElementById('debtEmpty').hidden = list.length > 0;
+    if (list.length && !people.length) {
+      const none = document.createElement('div');
+      none.className = 'debt-none';
+      none.textContent = debtFilter === 'open' ? 'Everything is settled.' : 'Nothing settled yet.';
+      wrap.appendChild(none);
+    }
+
+    people.forEach(g => {
+      const key = debtPersonKey(g.name);
+      const card = document.createElement('div');
+      card.className = 'debt-person' + (debtExpanded[key] ? ' is-open' : '');
+
+      const head = document.createElement('button');
+      head.type = 'button';
+      head.className = 'debt-person-head';
+      head.setAttribute('aria-expanded', debtExpanded[key] ? 'true' : 'false');
+      const av = document.createElement('span');
+      av.className = 'debt-avatar';
+      av.style.background = debtAvatarColor(g.name);
+      av.textContent = debtInitials(g.name);
+      head.appendChild(av);
+      const info = document.createElement('span');
+      info.className = 'debt-person-info';
+      const nm = document.createElement('span'); nm.className = 'debt-person-name'; nm.textContent = g.name;
+      const sub = document.createElement('span'); sub.className = 'debt-person-sub';
+      sub.textContent = (g.openCount ? g.openCount + ' open' : 'all settled') + (g.latest ? ' · ' + debtFmtDate(g.latest) : '');
+      info.appendChild(nm); info.appendChild(sub);
+      head.appendChild(info);
+      const bal = document.createElement('span');
+      bal.className = 'debt-person-bal';
+      const balAmt = document.createElement('span');
+      const n = g.totals.net;
+      balAmt.className = 'debt-person-amt' + (n > 0 ? ' is-in' : n < 0 ? ' is-out' : '');
+      balAmt.textContent = n ? fmtMoney(Math.abs(n)) : '—';
+      const balLbl = document.createElement('span');
+      balLbl.className = 'debt-person-lbl';
+      balLbl.textContent = n > 0 ? 'owes you' : n < 0 ? 'you owe' : 'settled';
+      bal.appendChild(balAmt); bal.appendChild(balLbl);
+      head.appendChild(bal);
+      const chev = document.createElement('span'); chev.className = 'debt-chev'; chev.textContent = '›';
+      head.appendChild(chev);
+      head.addEventListener('click', () => { debtExpanded[key] = !debtExpanded[key]; renderDebts(); });
+      card.appendChild(head);
+
+      if (debtExpanded[key]) {
+        const body = document.createElement('div');
+        body.className = 'debt-person-body';
+        const shown = g.items
+          .filter(d => debtFilter === 'all' || (debtFilter === 'open' ? d.status !== 'settled' : d.status === 'settled'))
+          .sort((a, b) => (b.date || '').localeCompare(a.date || '') || b.ts - a.ts);
+        shown.forEach(d => body.appendChild(debtItemRow(d)));
+        if (g.totals.owedToMe && g.totals.iOwe) {
+          const sum = document.createElement('div');
+          sum.className = 'debt-person-sum';
+          sum.textContent = 'Owes you ' + fmtMoney(g.totals.owedToMe) + ' · you owe ' + fmtMoney(g.totals.iOwe) +
+            ' → net ' + (n >= 0 ? 'owed to you ' : 'you owe ') + fmtMoney(Math.abs(n));
+          body.appendChild(sum);
         }
-        confirmDeduct(orderId, b.dataset.cat, b.dataset.name);
-      });
+        const add = document.createElement('button');
+        add.type = 'button';
+        add.className = 'debt-person-add';
+        add.textContent = '+ Add for ' + g.name;
+        add.addEventListener('click', () => {
+          debtResetForm();
+          document.getElementById('debtPerson').value = g.name;
+          document.getElementById('debtForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          document.getElementById('debtDetails').focus({ preventScroll: true });
+        });
+        body.appendChild(add);
+        card.appendChild(body);
+      }
+      wrap.appendChild(card);
     });
-    chooser.querySelector('.ord-deduct-cancel').addEventListener('click', () => chooser.remove());
   }
-  function confirmDeduct(orderId, catKey, itemName) {
-    const orders = storeGet('incoming_orders') || [];
-    const oIdx = orders.findIndex(x => x.id === orderId);
-    if (oIdx < 0) return;
-    const order = orders[oIdx];
-    if (order.deductedAt) return; // already deducted
-    const items = storeGet('nw:' + catKey) || [];
-    const itemIdx = items.findIndex(it => String(it.name) === String(itemName));
-    if (itemIdx < 0) {
-      alert('That account no longer exists. Refresh the chooser.');
-      return;
-    }
-    const cost = Number(order.amount) || 0;
-    const grandBefore = nwGrandCHF();
-    const pctAtDeduction = grandBefore > 0 ? (cost / grandBefore) * 100 : 0;
-    // Subtract from the chosen NW account
-    items[itemIdx].amount = (Number(items[itemIdx].amount) || 0) - cost;
-    storeSet('nw:' + catKey, items);
-    logActivity(catKey, items[itemIdx].name, -cost, 'edit');
-    // Mark the order as deducted with frozen %
-    orders[oIdx] = {
-      ...order,
-      deductedAt: Date.now(),
-      pctAtDeduction: pctAtDeduction,
-      deductedFrom: { cat: catKey, name: items[itemIdx].name }
-    };
-    storeSet('incoming_orders', orders);
-    renderAllNetWorth();   // re-paints NW totals, donut, activity, and orders
+
+  function debtSetDirection(dir) {
+    debtDirection = dir;
+    document.querySelectorAll('.debt-dir-btn').forEach(b => b.classList.toggle('active', b.dataset.dir === dir));
   }
-  function undoDeduct(orderId) {
-    const orders = storeGet('incoming_orders') || [];
-    const oIdx = orders.findIndex(x => x.id === orderId);
-    if (oIdx < 0) return;
-    const order = orders[oIdx];
-    if (!order.deductedAt || !order.deductedFrom) return;
-    const cost = Number(order.amount) || 0;
-    const items = storeGet('nw:' + order.deductedFrom.cat) || [];
-    const itemIdx = items.findIndex(it => String(it.name) === String(order.deductedFrom.name));
-    if (itemIdx >= 0) {
-      items[itemIdx].amount = (Number(items[itemIdx].amount) || 0) + cost;
-      storeSet('nw:' + order.deductedFrom.cat, items);
-      logActivity(order.deductedFrom.cat, items[itemIdx].name, cost, 'edit');
-    }
-    orders[oIdx] = { ...order, deductedAt: null, pctAtDeduction: null, deductedFrom: null };
-    storeSet('incoming_orders', orders);
-    renderAllNetWorth();
+  function debtSyncPaidField() {
+    document.getElementById('debtPaid').hidden = document.getElementById('debtStatus').value !== 'partial';
   }
-  // Wire renderOrders into the global render so it stays in sync with NW changes
-  const _prevRenderAll = (typeof renderAllNetWorth === 'function') ? renderAllNetWorth : null;
-  // The "From" select uses values like "bank::star one". Split into parts.
-  function parseFromValue(v) {
-    const s = String(v || '');
-    const ix = s.indexOf('::');
-    if (ix < 0) return { cat: 'bank', name: '' };
-    return { cat: s.slice(0, ix), name: s.slice(ix + 2) };
+  function debtResetForm() {
+    debtEditingId = null;
+    ['debtPerson', 'debtDetails', 'debtAmount', 'debtPaid', 'debtNotes'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('debtDate').value = debtToday();
+    document.getElementById('debtStatus').value = 'pending';
+    document.getElementById('debtCurrency').value = currencyEl ? currencyEl.value : 'EUR';
+    document.getElementById('debtFormTitle').textContent = 'Add a debt';
+    document.getElementById('debtSave').textContent = '+ Add';
+    document.getElementById('debtCancel').hidden = true;
+    debtSetDirection('in');
+    debtSyncPaidField();
   }
-  // Live preview on the add card — updates as user types the cost
-  function updateOrdPreview() {
-    const costEl = document.getElementById('ordCost');
-    const ccyEl  = document.getElementById('ordCurrency');
-    const fromEl = document.getElementById('ordFromCat');
-    const prev   = document.getElementById('ordAddPreview');
-    if (!prev) return;
-    const aRaw = parseFloat(costEl && costEl.value);
-    if (!costEl || isNaN(aRaw) || aRaw <= 0) {
-      prev.textContent = 'Type a cost — preview will show what % of net worth it takes.';
-      prev.className = 'ord-add-preview';
-      return;
-    }
-    const ccy = ccyEl ? ccyEl.value : 'CHF';
+  function debtStartEdit(id, forceStatus) {
+    const d = debtsAll().find(x => x.id === id);
+    if (!d) return;
+    debtEditingId = id;
+    const ccy = d.entered_currency || 'CHF';
     const rate = exchangeRates[ccy] || 1;
-    const amountCHF = aRaw / rate;
-    const grand = nwGrandCHF();
-    const parsed = parseFromValue(fromEl ? fromEl.value : '');
-    const fromName = parsed.name || (ORD_FROM_META[parsed.cat] || ORD_FROM_META.bank).name;
-    if (grand > 0) {
-      const pct = (amountCHF / grand) * 100;
-      const cls = ordPctClass(pct);
-      prev.textContent = fmtMoney(amountCHF) + ' from ' + fromName + ' · ' + pct.toFixed(2) + '% of your ' + fmtMoney(grand) + ' net worth';
-      prev.className = 'ord-add-preview ' + (cls === 'good' ? '' : cls);
+    document.getElementById('debtPerson').value = d.person || '';
+    document.getElementById('debtDetails').value = d.details || '';
+    document.getElementById('debtAmount').value = d.entered_amount != null ? d.entered_amount : (Number(d.amount) * rate).toFixed(2);
+    document.getElementById('debtCurrency').value = ccy;
+    document.getElementById('debtDate').value = d.date || '';
+    document.getElementById('debtStatus').value = forceStatus || d.status;
+    document.getElementById('debtPaid').value = d.paid ? (Number(d.paid) * rate).toFixed(2) : '';
+    document.getElementById('debtNotes').value = d.notes || '';
+    document.getElementById('debtFormTitle').textContent = 'Edit debt';
+    document.getElementById('debtSave').textContent = 'Save';
+    document.getElementById('debtCancel').hidden = false;
+    debtSetDirection(d.dir === 'out' ? 'out' : 'in');
+    debtSyncPaidField();
+    document.getElementById('debtForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (forceStatus === 'partial') document.getElementById('debtPaid').focus({ preventScroll: true });
+  }
+  function debtSaveForm() {
+    const person = document.getElementById('debtPerson').value.trim();
+    const details = document.getElementById('debtDetails').value.trim();
+    const aRaw = parseFloat(document.getElementById('debtAmount').value);
+    if (!person) { document.getElementById('debtPerson').focus(); return; }
+    if (isNaN(aRaw) || aRaw <= 0) { document.getElementById('debtAmount').focus(); return; }
+    const ccy = document.getElementById('debtCurrency').value;
+    const rate = exchangeRates[ccy] || 1;
+    const status = document.getElementById('debtStatus').value;
+    const paidRaw = parseFloat(document.getElementById('debtPaid').value);
+    // Reuse the existing spelling of a person so they stay in one card.
+    const existing = debtsAll().find(d => debtPersonKey(d.person) === debtPersonKey(person));
+    const item = {
+      dir: debtDirection,
+      person: existing ? existing.person : person,
+      details,
+      amount: aRaw / rate,
+      entered_amount: aRaw,
+      entered_currency: ccy,
+      date: document.getElementById('debtDate').value || debtToday(),
+      status,
+      notes: document.getElementById('debtNotes').value.trim()
+    };
+    if (status === 'partial') item.paid = isNaN(paidRaw) ? 0 : Math.min(paidRaw, aRaw) / rate;
+    const list = debtsAll();
+    if (debtEditingId) {
+      const idx = list.findIndex(x => x.id === debtEditingId);
+      if (idx >= 0) list[idx] = Object.assign({ id: list[idx].id, ts: list[idx].ts }, item);
     } else {
-      prev.textContent = fmtMoney(amountCHF) + ' from ' + fromName + ' · add net worth first to see %';
-      prev.className = 'ord-add-preview';
+      list.push(Object.assign({ id: 'd_' + Date.now() + '_' + Math.floor(Math.random() * 9999), ts: Date.now() }, item));
     }
+    debtsSave(list);
+    debtExpanded[debtPersonKey(item.person)] = true;
+    debtResetForm();
+    renderDebts();
   }
-  function doOrdAdd() {
-    try {
-      const nEl = document.getElementById('ordName');
-      const aEl = document.getElementById('ordCost');
-      const cEl = document.getElementById('ordCurrency');
-      const fEl = document.getElementById('ordFromCat');
-      const dEl = document.getElementById('ordArrival');
-      if (!nEl || !aEl) return;
-      const n = (nEl.value || '').trim();
-      const aRaw = parseFloat(aEl.value);
-      if (!n || isNaN(aRaw)) { nEl.focus(); return; }
-      const ccy = cEl ? cEl.value : 'CHF';
-      const rate = exchangeRates[ccy] || 1;
-      const amountCHF = aRaw / rate;
-      const parsed = parseFromValue(fEl ? fEl.value : '');
-      const arr = storeGet('incoming_orders') || [];
-      arr.push({
-        id: 'o_' + Date.now() + '_' + Math.floor(Math.random() * 9999),
-        name: n,
-        amount: amountCHF,
-        entered_amount: aRaw,
-        entered_currency: ccy,
-        fromCat: parsed.cat || 'bank',
-        fromAccount: parsed.name || null,    // the actual NW item the user picked
-        date: dEl && dEl.value ? dEl.value : null,
-        ts: Date.now(),
-        deductedAt: null,
-        pctAtDeduction: null,
-        deductedFrom: null
-      });
-      storeSet('incoming_orders', arr);
-      nEl.value = ''; aEl.value = '';
-      if (dEl) dEl.value = '';
-      updateOrdPreview();
-      renderOrders();
-    } catch (e) { console.error('ordAdd failed', e); }
-  }
-  window.__addOrder = doOrdAdd;
-  // Wire live-preview listeners
-  ['ordCost','ordCurrency','ordFromCat'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', updateOrdPreview);
-    if (el) el.addEventListener('change', updateOrdPreview);
-  });
-  ['ordName','ordCost'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') doOrdAdd(); });
-  });
-  renderOrders();
-  updateOrdPreview();
+
+  document.querySelectorAll('.debt-dir-btn').forEach(b => b.addEventListener('click', () => debtSetDirection(b.dataset.dir)));
+  document.querySelectorAll('.debt-chip').forEach(b => b.addEventListener('click', () => {
+    debtFilter = b.dataset.filter;
+    document.querySelectorAll('.debt-chip').forEach(c => c.classList.toggle('active', c === b));
+    renderDebts();
+  }));
+  document.getElementById('debtStatus').addEventListener('change', debtSyncPaidField);
+  document.getElementById('debtSave').addEventListener('click', debtSaveForm);
+  document.getElementById('debtCancel').addEventListener('click', debtResetForm);
+  ['debtPerson', 'debtDetails', 'debtAmount', 'debtPaid'].forEach(id =>
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') debtSaveForm(); }));
+  debtResetForm();
+  renderDebts();
 
   // ============================================================
   // FINANCE TICKER — rotates through upcoming subscription renewals

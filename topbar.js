@@ -14,61 +14,59 @@
   position: sticky; top: 0; z-index: 40;
   display: flex; gap: 6px;
   padding: max(10px, env(safe-area-inset-top)) 14px 10px;
-  /* Fully opaque so each page's body background can't bleed through
-     and tint the bar a different color. Matches the dashboard's base
-     dark background so the bar feels continuous with the page chrome. */
-  background: #0a0a0b;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  /* Frosted white, like iOS navigation bars. */
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: saturate(1.8) blur(20px);
+  backdrop-filter: saturate(1.8) blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
 }
 .topbar-pill {
   flex: 1 1 0; min-width: 0;
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 7px;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 11px;
+  background: #F5F5F7;
+  border-radius: 999px;
   text-decoration: none;
-  color: #FAFAFA;
+  color: #1D1D1F;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s;
 }
-.topbar-pill:hover { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.10); }
+.topbar-pill:hover { background: #EBEBEF; }
 .topbar-pill-dot {
   width: 7px; height: 7px; border-radius: 50%;
-  background: #6ee7b7; flex-shrink: 0;
+  background: #34C759; flex-shrink: 0;
 }
-.topbar-pill.warn .topbar-pill-dot { background: #fbbf24; }
+.topbar-pill.warn .topbar-pill-dot { background: #FF9500; }
 .topbar-pill.miss .topbar-pill-dot {
-  background: #ff8a8a;
+  background: #FF3B30;
   animation: topbar-miss-pulse 1.6s ease-in-out infinite;
 }
 @keyframes topbar-miss-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
-  50%      { box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); }
+  50%      { box-shadow: 0 0 0 5px rgba(255, 59, 48, 0); }
 }
 .topbar-pill-label {
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px; font-weight: 600;
+  color: #1D1D1F;
   flex-shrink: 0;
 }
 .topbar-pill-count {
   margin-left: auto;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 12px; font-weight: 700;
-  color: #FAFAFA;
+  font-size: 13px; font-weight: 500;
+  color: #6E6E73;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+
 @media (max-width: 480px) {
-  .topbar { padding-left: 10px; padding-right: 10px; gap: 4px; }
-  .topbar-pill { padding: 7px 9px; gap: 5px; }
-  .topbar-pill-label { font-size: 9px; letter-spacing: 0.10em; }
-  .topbar-pill-count { font-size: 11px; }
+  .topbar { padding-left: 12px; padding-right: 12px; gap: 5px; }
+  .topbar-pill { padding: 7px 10px; gap: 5px; }
+  .topbar-pill-label { font-size: 12px; }
+  .topbar-pill-count { font-size: 12px; }
 }
-@media (max-width: 380px) {
-  .topbar-pill-label { display: none; }
+@media (max-width: 360px) {
+  .topbar-pill-dot { display: none; }
 }
 
 /* === Global mobile lockdown ===
@@ -122,17 +120,17 @@ body.topbar-modal-open {
 <header class="topbar" id="topbar" role="navigation" aria-label="Quick stats">
   <a href="index.html" class="topbar-pill" id="topbarGoals">
     <span class="topbar-pill-dot"></span>
-    <span class="topbar-pill-label">GOALS</span>
+    <span class="topbar-pill-label">Goals</span>
     <span class="topbar-pill-count" id="topbarGoalsCount">—/—</span>
   </a>
   <a href="health.html" class="topbar-pill" id="topbarStack">
     <span class="topbar-pill-dot"></span>
-    <span class="topbar-pill-label">STACK</span>
+    <span class="topbar-pill-label">Stack</span>
     <span class="topbar-pill-count" id="topbarStackCount">—/—</span>
   </a>
   <a href="finance.html" class="topbar-pill" id="topbarFinance">
     <span class="topbar-pill-dot"></span>
-    <span class="topbar-pill-label">FINANCE</span>
+    <span class="topbar-pill-label">Finance</span>
   </a>
 </header>
 `;

@@ -12,34 +12,13 @@
 //   NOTION_DATABASE_ID  optional, defaults to the Task List below
 // =============================================================
 
-const NOTION_VERSION = '2022-06-28';
+const { notion, notionError } = require('./_notion');
+
 const DEFAULT_DATABASE_ID = '0d17ef02b86c4df59ed7d9a50e6d3cf3';
 
 const OPEN_STATUSES = ['Today', 'Doing', 'Started', 'To Do'];
 const SETTABLE_STATUSES = ['Today', 'Doing', 'Started', 'To Do', 'Done 🙌'];
 const PRIORITY_RANK = { High: 0, Medium: 1, Low: 2 };
-
-function notion(path, method, body) {
-  return fetch('https://api.notion.com/v1/' + path, {
-    method,
-    headers: {
-      'Authorization': 'Bearer ' + process.env.NOTION_TOKEN,
-      'Notion-Version': NOTION_VERSION,
-      'Content-Type': 'application/json'
-    },
-    body: body ? JSON.stringify(body) : undefined
-  });
-}
-
-// 401 = the key is wrong; 403/404 = the key can't see the database
-// (Task List not shared with the integration).
-function notionError(status) {
-  const err = new Error('Notion responded ' + status);
-  err.code = status === 401 ? 'notion-bad-token'
-           : status === 403 || status === 404 ? 'notion-no-access'
-           : 'notion-error';
-  return err;
-}
 
 function toTask(page) {
   const p = page.properties || {};

@@ -103,24 +103,28 @@ body {
   background: var(--raised);
 }
 
-/* ===== Morning brief link ===== */
+/* ===== Morning brief (compact; full brief on brief.html) ===== */
 .brief-card {
   display: flex; align-items: center; gap: 14px;
-  padding: 18px 20px;
+  padding: 16px 18px;
   margin-bottom: 12px;
   border-radius: var(--radius-lg);
   background: var(--accent);
-  text-decoration: none;
   color: var(--ink);
+  text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   transition: transform 0.12s, filter 0.15s;
 }
 .brief-card:hover { filter: brightness(0.98); }
 .brief-card:active { transform: scale(0.99); }
-.brief-sun { font-size: 24px; flex-shrink: 0; }
+.brief-card.brief-stale { background: var(--accent-soft); }
+.brief-sun { font-size: 22px; flex-shrink: 0; }
 .brief-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .brief-eyebrow { font-size: 13px; font-weight: 600; color: rgba(29, 29, 31, 0.6); }
-.brief-title { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.brief-title {
+  font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 .brief-open {
   flex-shrink: 0;
   padding: 7px 14px;
@@ -461,17 +465,6 @@ body {
 .gm-add:hover { opacity: 0.88; }
 .gm-add:active { transform: scale(0.97); }
 
-.gm-polish {
-  padding: 12px 18px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--raised);
-  color: var(--ink);
-  font-family: inherit; font-size: 15px; font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.gm-polish:hover { background: var(--surface-2); }
 
 .gm-status {
   flex-basis: 100%;
@@ -481,6 +474,137 @@ body {
   margin-top: 4px;
 }
 .gm-status.gm-status-error { color: var(--red); }
+
+/* ===== Connect (shared passcode) ===== */
+.connect-card { background: var(--accent-soft); }
+
+/* ===== Calendar: Today ===== */
+.cal-allday { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.cal-allday:empty { display: none; }
+.cal-pill {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--raised);
+  color: var(--ink);
+  font-size: 13px; font-weight: 600;
+}
+.cal-list { list-style: none; margin: 0; padding: 0; }
+.cal-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  background: var(--raised);
+  border-radius: var(--radius-md);
+  transition: opacity 0.3s;
+}
+.cal-row.cal-past { opacity: 0.45; }
+.cal-row.cal-now { background: var(--accent); }
+.cal-time {
+  width: 66px; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  font-size: 15px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.cal-time-end { font-size: 12px; font-weight: 500; color: var(--ink-2); }
+.cal-row.cal-now .cal-time-end { color: rgba(29, 29, 31, 0.6); }
+.cal-bar { width: 3px; align-self: stretch; border-radius: 2px; flex-shrink: 0; }
+.cal-body { flex: 1; min-width: 0; }
+.cal-title {
+  font-size: 16px; font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cal-meta {
+  font-size: 13px; color: var(--ink-2);
+  margin-top: 1px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cal-row.cal-now .cal-meta { color: rgba(29, 29, 31, 0.7); font-weight: 600; }
+
+/* ===== Calendar: This week (one row per day, hours left → right) ===== */
+.cal-nav { display: flex; gap: 6px; }
+.cal-week { display: flex; flex-direction: column; gap: 6px; }
+.cal-scale, .cal-day {
+  display: grid;
+  grid-template-columns: 44px 1fr 48px;
+  align-items: center;
+  gap: 10px;
+}
+.cal-ticks { position: relative; height: 14px; }
+.cal-ticks span {
+  position: absolute; top: 0;
+  transform: translateX(-50%);
+  font-size: 11px; color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.cal-day-label {
+  display: flex; flex-direction: column; align-items: flex-start;
+  line-height: 1.1;
+  font-size: 12px; font-weight: 500; color: var(--ink-2);
+}
+.cal-day-num { font-size: 17px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.cal-day-today .cal-day-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 26px; height: 26px; padding: 0 4px;
+  margin-left: -4px;
+  border-radius: 999px;
+  background: var(--ink); color: #FFFFFF;
+  font-size: 15px;
+}
+.cal-track {
+  position: relative;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--raised);
+  overflow: hidden;
+}
+.cal-block {
+  position: absolute;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 6px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  color: #FFFFFF;
+  font-family: inherit; font-size: 11px; font-weight: 600;
+  text-align: left;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  cursor: pointer;
+}
+.cal-allday-band {
+  position: absolute; left: 0; right: 0; top: 0;
+  height: 4px;
+  border: 0; padding: 0;
+  background: var(--accent);
+  cursor: pointer;
+}
+.cal-now-line {
+  position: absolute; top: 0; bottom: 0;
+  width: 2px; margin-left: -1px;
+  background: var(--red);
+  pointer-events: none;
+}
+.cal-now-line::before {
+  content: '';
+  position: absolute; top: -1px; left: -3px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red);
+}
+.cal-day-total {
+  text-align: right;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.cal-detail {
+  margin-top: 12px;
+  font-size: 14px; color: var(--ink);
+  min-height: 20px;
+}
+.cal-detail:empty::before { content: 'Tap a block for details.'; color: var(--ink-3); }
 
 /* ===== From Notion suggestions ===== */
 .nt-refresh {
@@ -534,8 +658,6 @@ body {
   body { padding: max(20px, env(safe-area-inset-top)) 16px 50px; }
   .gm-card { padding: 18px; }
   .gm-progress-num { font-size: 56px; }
-  .gm-input { flex-basis: 100%; }
-  .gm-add, .gm-polish { flex: 1; }
 }
 </style>
 </head>
@@ -558,15 +680,25 @@ body {
     </div>
   </div>
 
-  <!-- MORNING BRIEF: link to the claude.ai brief a scheduled task refreshes each weekday -->
-  <a class="brief-card" href="https://claude.ai/artifact/WUxtRNmXspUwYNmKFVcs61" target="_blank" rel="noopener">
+  <!-- MORNING BRIEF: today's headline; the full brief opens on brief.html -->
+  <a class="brief-card" id="briefCard" href="brief.html">
     <span class="brief-sun" aria-hidden="true">☀️</span>
     <span class="brief-body">
-      <span class="brief-eyebrow">Morning brief</span>
-      <span class="brief-title">Your day from email &amp; calendar</span>
+      <span class="brief-eyebrow" id="briefDate">Morning brief</span>
+      <span class="brief-title" id="briefHeadline">Your day from email &amp; calendar</span>
     </span>
     <span class="brief-open">Open →</span>
   </a>
+
+  <!-- CONNECT: one passcode for everything behind /api (Notion, Calendar) -->
+  <div class="gm-card connect-card" id="connectCard" hidden>
+    <div class="gm-eyebrow">Connect your dashboard</div>
+    <div class="gm-tomorrow-sub" id="connectMsg">Enter your passcode once to show Notion and Calendar on this device.</div>
+    <div class="goal-input-wrap gm-input-wrap">
+      <input id="connectInput" class="gm-input" type="password" placeholder="Dashboard passcode" autocomplete="current-password">
+      <button type="button" id="connectBtn" class="gm-add">Connect</button>
+    </div>
+  </div>
 
   <div class="day-ring-wrap">
     <div class="day-ring">
@@ -588,6 +720,40 @@ body {
   </div>
 
   <div class="section">
+    <div class="section-title">Calendar</div>
+
+    <!-- CALENDAR: TODAY -->
+    <div class="gm-card cal-card" id="calToday">
+      <div class="gm-header">
+        <div class="gm-header-left">
+          <div class="gm-eyebrow" id="calTodayLabel">Today</div>
+          <div class="gm-tomorrow-sub" id="calTodaySub">Your events from Google Calendar.</div>
+        </div>
+        <button type="button" class="nt-refresh" id="calRefresh" aria-label="Refresh calendar">↻</button>
+      </div>
+      <div class="cal-allday" id="calAllDay"></div>
+      <ul class="goal-list cal-list" id="calTodayList"></ul>
+      <div class="empty-state" id="calTodayEmpty" style="display:none;"></div>
+    </div>
+
+    <!-- CALENDAR: THIS WEEK -->
+    <div class="gm-card cal-card" id="calWeek">
+      <div class="gm-header">
+        <div class="gm-header-left">
+          <div class="gm-eyebrow" id="calWeekLabel">This week</div>
+          <div class="gm-tomorrow-sub" id="calWeekSub">—</div>
+        </div>
+        <div class="cal-nav">
+          <button type="button" class="nt-refresh" id="calPrev" aria-label="Previous week">‹</button>
+          <button type="button" class="nt-refresh" id="calNext" aria-label="Next week">›</button>
+        </div>
+      </div>
+      <div class="cal-week" id="calWeekGrid"></div>
+      <div class="cal-detail" id="calDetail"></div>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">To Do List</div>
 
     <!-- FROM NOTION -->
@@ -602,10 +768,6 @@ body {
       <ul id="notionList" class="goal-list gm-list"></ul>
       <div id="notionEmpty" class="empty-state" style="display:none;"></div>
       <button type="button" id="notionMore" class="gm-show-toggle" style="display:none;"></button>
-      <div class="goal-input-wrap gm-input-wrap" id="notionPassWrap" style="display:none;">
-        <input id="notionPassInput" class="gm-input" type="password" placeholder="Dashboard passcode" autocomplete="current-password">
-        <button type="button" id="notionPassBtn" class="gm-add">Connect</button>
-      </div>
       <div class="gm-status" id="notionStatus"></div>
     </div>
 
@@ -633,8 +795,6 @@ body {
       <div class="goal-input-wrap gm-input-wrap">
         <input id="goalInput" class="gm-input" type="text" placeholder="Add a goal for today…" autocomplete="off">
         <button type="button" id="goalAddBtn"    class="gm-add">+ Add</button>
-        <button type="button" id="goalPolishBtn" class="gm-polish">✨ Polish</button>
-        <div class="gm-status" id="polishStatus"></div>
       </div>
     </div>
 
@@ -652,8 +812,6 @@ body {
       <div class="goal-input-wrap gm-input-wrap">
         <input id="tomorrowInput" class="gm-input" type="text" placeholder="Add a goal for tomorrow…" autocomplete="off">
         <button type="button" id="tomorrowAddBtn"    class="gm-add">+ Add</button>
-        <button type="button" id="tomorrowPolishBtn" class="gm-polish">✨ Polish</button>
-        <div class="gm-status" id="tomorrowStatus"></div>
       </div>
     </div>
   </div>
@@ -664,8 +822,6 @@ body {
 (function () {
   'use strict';
 
-  // Paste your Anthropic key here to enable ✨ Polish. Empty = falls back to plain add.
-  const ANTHROPIC_API_KEY = '';
 
   const WAKE_HOUR  = 8;
   const SLEEP_HOUR = 24;
@@ -802,6 +958,9 @@ body {
     const item = items[cycleIdx];
     cycleIdx = (cycleIdx + 1) % items.length;
 
+    // Drop rows still animating out (a quick second tick, or timers delayed
+    // in a background tab, would otherwise leave two rows on top of each other).
+    tickerStage.querySelectorAll('.goal-ticker-row.is-leaving').forEach(r => r.remove());
     const oldRow = tickerStage.querySelector('.goal-ticker-row');
     const newRow = document.createElement('div');
     newRow.className = 'goal-ticker-row';
@@ -1181,22 +1340,19 @@ body {
     loadToday(); loadTomorrow();
   });
 
-  // ---------- From Notion ----------
-  // Talks to /api/notion (a Vercel function that holds the Notion key).
-  // The passcode is typed once and remembered on this device.
-  const NOTION_PASS_KEY = 'notion:passcode';
-  const NOTION_SHOW = 5;
-  let notionTasks = [];
-  let notionExpanded = false;
+  // ---------- Dashboard passcode (shared by Notion + Calendar) ----------
+  // The /api functions on Vercel hold the secrets and check this passcode.
+  // It is typed once in the Connect card and remembered on this device.
+  const PASS_KEY = 'notion:passcode';
 
-  function notionPasscode() {
-    try { return localStorage.getItem(NOTION_PASS_KEY) || ''; } catch (e) { return ''; }
+  function dashboardPasscode() {
+    try { return localStorage.getItem(PASS_KEY) || ''; } catch (e) { return ''; }
   }
 
-  async function notionFetch(method, body) {
-    const res = await fetch('/api/notion', {
+  async function apiFetch(path, method, body) {
+    const res = await fetch(path, {
       method,
-      headers: { 'Content-Type': 'application/json', 'x-passcode': notionPasscode() },
+      headers: { 'Content-Type': 'application/json', 'x-passcode': dashboardPasscode() },
       body: body ? JSON.stringify(body) : undefined
     });
     let data = {};
@@ -1209,13 +1365,47 @@ body {
     return data;
   }
 
-  function notionShowMessage(text, showPass) {
+  function showConnect(message) {
+    document.getElementById('connectCard').hidden = false;
+    document.getElementById('connectMsg').textContent =
+      message || 'Enter your passcode once to show Notion and Calendar on this device.';
+  }
+
+  function forgetPasscode() {
+    try { localStorage.removeItem(PASS_KEY); } catch (e) {}
+    showConnect('Wrong passcode — try again.');
+  }
+
+  document.getElementById('connectBtn').addEventListener('click', () => {
+    const input = document.getElementById('connectInput');
+    const value = input.value.trim();
+    if (!value) return;
+    try { localStorage.setItem(PASS_KEY, value); } catch (e) {}
+    input.value = '';
+    document.getElementById('connectCard').hidden = true;
+    loadBrief();
+    loadNotion();
+    loadCalendar();
+  });
+  document.getElementById('connectInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('connectBtn').click(); }
+  });
+
+  // ---------- From Notion ----------
+  // Talks to /api/notion (a Vercel function that holds the Notion key).
+  const NOTION_SHOW = 5;
+  let notionTasks = [];
+  let notionExpanded = false;
+
+  function notionFetch(method, body) {
+    return apiFetch('/api/notion', method, body);
+  }
+  function notionShowMessage(text) {
     document.getElementById('notionList').innerHTML = '';
     document.getElementById('notionMore').style.display = 'none';
     const empty = document.getElementById('notionEmpty');
     empty.textContent = text;
     empty.style.display = text ? 'block' : 'none';
-    document.getElementById('notionPassWrap').style.display = showPass ? 'flex' : 'none';
   }
 
   function formatDue(due) {
@@ -1233,7 +1423,6 @@ body {
     const tasks = notionTasks.filter(t => !inToday.has(t.id));
     const listEl = document.getElementById('notionList');
     const moreBtn = document.getElementById('notionMore');
-    document.getElementById('notionPassWrap').style.display = 'none';
     listEl.innerHTML = '';
 
     const empty = document.getElementById('notionEmpty');
@@ -1290,8 +1479,9 @@ body {
   }
 
   async function loadNotion() {
-    if (!notionPasscode()) {
-      notionShowMessage('Enter your dashboard passcode to connect Notion.', true);
+    if (!dashboardPasscode()) {
+      notionShowMessage('Connect with your passcode above to see Notion tasks.');
+      showConnect();
       return;
     }
     const btn = document.getElementById('notionRefresh');
@@ -1303,16 +1493,16 @@ body {
       renderNotion();
     } catch (e) {
       if (e.code === 'bad-passcode') {
-        try { localStorage.removeItem(NOTION_PASS_KEY); } catch (err) {}
-        notionShowMessage('Wrong passcode — try again.', true);
+        forgetPasscode();
+        notionShowMessage('Connect with your passcode above to see Notion tasks.');
       } else if (e.code === 'not-configured') {
-        notionShowMessage('Notion isn’t set up yet: add NOTION_TOKEN and DASHBOARD_PASSCODE in Vercel.', false);
+        notionShowMessage('Notion isn’t set up yet: add NOTION_TOKEN and DASHBOARD_PASSCODE in Vercel.');
       } else if (e.code === 'notion-bad-token') {
-        notionShowMessage('Notion rejected the key: re-paste NOTION_TOKEN in Vercel.', false);
+        notionShowMessage('Notion rejected the key: re-paste NOTION_TOKEN in Vercel.');
       } else if (e.code === 'notion-no-access') {
-        notionShowMessage('Notion can’t see the Task List: in Notion, open it → ••• → Connections → add your integration.', false);
+        notionShowMessage('Notion can’t see the Task List: in Notion, open it → ••• → Connections → add your integration.');
       } else {
-        notionShowMessage('Couldn’t reach Notion. Tap ↻ to retry.', false);
+        notionShowMessage('Couldn’t reach Notion. Tap ↻ to retry.');
       }
     }
   }
@@ -1332,7 +1522,7 @@ body {
   }
 
   async function notionSetStatus(id, status) {
-    if (!notionPasscode()) return false;
+    if (!dashboardPasscode()) return false;
     try {
       await notionFetch('POST', { id, status });
       return true;
@@ -1347,20 +1537,322 @@ body {
     notionExpanded = !notionExpanded;
     renderNotion();
   });
-  document.getElementById('notionPassBtn').addEventListener('click', () => {
-    const input = document.getElementById('notionPassInput');
-    const value = input.value.trim();
-    if (!value) return;
-    try { localStorage.setItem(NOTION_PASS_KEY, value); } catch (e) {}
-    input.value = '';
-    loadNotion();
-  });
-  document.getElementById('notionPassInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('notionPassBtn').click(); }
-  });
   window.addEventListener('goals-changed', () => { if (notionTasks.length) renderNotion(); });
 
-  // ---------- Add + Polish handlers ----------
+  // ---------- Morning brief ----------
+  // Reads /api/brief for today's headline; brief.html shows the whole brief.
+  function renderBrief(brief) {
+    if (!brief || !brief.headline) return;
+    const stale = brief.date && brief.date !== dateToKey(new Date());
+    document.getElementById('briefCard').classList.toggle('brief-stale', !!stale);
+    document.getElementById('briefDate').textContent = !brief.date ? 'Morning brief'
+      : stale ? 'Brief from ' + new Date(brief.date + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })
+      : 'Morning brief · today' + (brief.attention.length ? ' · ' + brief.attention.length + ' need' + (brief.attention.length === 1 ? 's' : '') + ' attention' : '');
+    document.getElementById('briefHeadline').textContent = brief.headline;
+  }
+
+  async function loadBrief() {
+    if (!dashboardPasscode()) return; // the card still opens the brief page
+    try {
+      const data = await apiFetch('/api/brief', 'GET');
+      renderBrief(data.brief);
+    } catch (e) {
+      if (e.code === 'bad-passcode') forgetPasscode();
+    }
+  }
+
+  // ---------- Calendar (Today + This week) ----------
+  // Reads /api/calendar (a Vercel function that reads your secret iCal link).
+  const CAL_START_HOUR = 7;
+  const CAL_END_HOUR   = 24;
+  const CAL_COLORS = ['var(--ink)', 'var(--blue)', 'var(--orange)', '#AF52DE', 'var(--green)'];
+  const CAL_TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  let calWeekOffset = 0;
+  let calThisWeek = null;   // events of the current week, used by the Today card
+  let calShownWeek = null;  // events of the week on screen
+
+  function startOfDay(d) { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+  function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function weekStart(offset) {
+    const today = startOfDay(new Date());
+    const monday = addDays(today, -((today.getDay() + 6) % 7));
+    return addDays(monday, offset * 7);
+  }
+  function fmtTime(d) { return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }); }
+  function fmtDuration(min) {
+    const h = Math.floor(min / 60), m = Math.round(min % 60);
+    return h && m ? h + 'h ' + m + 'm' : h ? h + 'h' : m + 'm';
+  }
+  function eventsOnDay(events, day) {
+    const from = startOfDay(day).getTime(), to = addDays(startOfDay(day), 1).getTime();
+    return events.filter(e => Date.parse(e.end) > from && Date.parse(e.start) < to);
+  }
+
+  function calMessage(text) {
+    document.getElementById('calAllDay').innerHTML = '';
+    document.getElementById('calTodayList').innerHTML = '';
+    const empty = document.getElementById('calTodayEmpty');
+    empty.textContent = text;
+    empty.style.display = 'block';
+    document.getElementById('calTodaySub').textContent = 'Your events from Google Calendar.';
+    document.getElementById('calWeekGrid').innerHTML = '';
+    document.getElementById('calWeekSub').textContent = '—';
+  }
+
+  function renderCalToday() {
+    if (!calThisWeek) return;
+    const now = Date.now();
+    const today = new Date();
+    const all = eventsOnDay(calThisWeek, today);
+    const allDay = all.filter(e => e.allDay);
+    const timed = all.filter(e => !e.allDay);
+
+    document.getElementById('calTodayLabel').textContent =
+      'Today — ' + today.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+
+    const pills = document.getElementById('calAllDay');
+    pills.innerHTML = '';
+    allDay.forEach(e => {
+      const pill = document.createElement('span');
+      pill.className = 'cal-pill';
+      pill.textContent = e.title;
+      pills.appendChild(pill);
+    });
+
+    const list = document.getElementById('calTodayList');
+    list.innerHTML = '';
+    const next = timed.find(e => Date.parse(e.start) > now);
+    timed.forEach(e => {
+      const s = Date.parse(e.start), en = Date.parse(e.end);
+      const li = document.createElement('li');
+      li.className = 'cal-row';
+      if (en <= now) li.classList.add('cal-past');
+      else if (s <= now) li.classList.add('cal-now');
+
+      const time = document.createElement('div');
+      time.className = 'cal-time';
+      const t1 = document.createElement('span'); t1.textContent = fmtTime(new Date(s));
+      const t2 = document.createElement('span'); t2.className = 'cal-time-end'; t2.textContent = fmtTime(new Date(en));
+      time.appendChild(t1); time.appendChild(t2);
+      li.appendChild(time);
+
+      const bar = document.createElement('span');
+      bar.className = 'cal-bar';
+      bar.style.background = CAL_COLORS[e.calendar % CAL_COLORS.length];
+      li.appendChild(bar);
+
+      const body = document.createElement('div');
+      body.className = 'cal-body';
+      const title = document.createElement('div');
+      title.className = 'cal-title';
+      title.textContent = e.title;
+      body.appendChild(title);
+      const metaParts = [];
+      if (s <= now && en > now) metaParts.push('Now · ends in ' + fmtDuration((en - now) / 60000));
+      else if (e === next) metaParts.push('Next · in ' + fmtDuration((s - now) / 60000));
+      if (e.location) metaParts.push(e.location);
+      if (metaParts.length) {
+        const meta = document.createElement('div');
+        meta.className = 'cal-meta';
+        meta.textContent = metaParts.join(' · ');
+        body.appendChild(meta);
+      }
+      li.appendChild(body);
+      list.appendChild(li);
+    });
+
+    const empty = document.getElementById('calTodayEmpty');
+    empty.textContent = 'Nothing on your calendar today.';
+    empty.style.display = timed.length || allDay.length ? 'none' : 'block';
+
+    const left = timed.filter(e => Date.parse(e.end) > now).length;
+    document.getElementById('calTodaySub').textContent =
+      !timed.length ? (allDay.length ? 'All-day only.' : 'A free day.')
+      : !left ? 'Done for today — ' + timed.length + ' event' + (timed.length === 1 ? '' : 's') + '.'
+      : left + ' of ' + timed.length + ' event' + (timed.length === 1 ? '' : 's') + ' left' +
+        (next ? ' · next at ' + fmtTime(new Date(Date.parse(next.start))) : '') + '.';
+  }
+
+  // Greedy lanes so overlapping blocks sit side by side vertically.
+  function assignLanes(items) {
+    const lanes = [];
+    items.forEach(it => {
+      let i = lanes.findIndex(end => end <= it.s);
+      if (i === -1) { i = lanes.length; lanes.push(0); }
+      lanes[i] = it.e;
+      it.lane = i;
+    });
+    items.forEach(it => { it.lanes = lanes.length; });
+  }
+
+  function renderCalWeek() {
+    if (!calShownWeek) return;
+    const grid = document.getElementById('calWeekGrid');
+    grid.innerHTML = '';
+    const start = weekStart(calWeekOffset);
+    const span = (CAL_END_HOUR - CAL_START_HOUR) * 60;
+    const todayKey = startOfDay(new Date()).getTime();
+    let bookedMin = 0;
+
+    const scale = document.createElement('div');
+    scale.className = 'cal-scale';
+    scale.innerHTML = '<span></span>';
+    const ticks = document.createElement('div');
+    ticks.className = 'cal-ticks';
+    for (let h = 8; h < CAL_END_HOUR; h += 4) {
+      const t = document.createElement('span');
+      t.style.left = ((h - CAL_START_HOUR) * 60 / span * 100) + '%';
+      t.textContent = new Date(2000, 0, 1, h).toLocaleTimeString(undefined, { hour: 'numeric' });
+      ticks.appendChild(t);
+    }
+    scale.appendChild(ticks);
+    grid.appendChild(scale);
+
+    for (let i = 0; i < 7; i++) {
+      const day = addDays(start, i);
+      const dayStart = day.getTime();
+      const events = eventsOnDay(calShownWeek, day);
+      const row = document.createElement('div');
+      row.className = 'cal-day' + (dayStart === todayKey ? ' cal-day-today' : '');
+
+      const label = document.createElement('div');
+      label.className = 'cal-day-label';
+      const wd = document.createElement('span'); wd.textContent = day.toLocaleDateString(undefined, { weekday: 'short' });
+      const dn = document.createElement('span'); dn.className = 'cal-day-num'; dn.textContent = day.getDate();
+      label.appendChild(wd); label.appendChild(dn);
+      row.appendChild(label);
+
+      const track = document.createElement('div');
+      track.className = 'cal-track';
+      const items = [];
+      let dayMin = 0;
+      events.forEach(e => {
+        if (e.allDay) {
+          const band = document.createElement('button');
+          band.type = 'button';
+          band.className = 'cal-allday-band';
+          band.title = e.title;
+          band.addEventListener('click', () => showCalDetail(e, day));
+          track.appendChild(band);
+          return;
+        }
+        const s = Math.max(Date.parse(e.start), dayStart);
+        const en = Math.min(Date.parse(e.end), dayStart + 86400000);
+        const sMin = (s - dayStart) / 60000, eMin = (en - dayStart) / 60000;
+        dayMin += Math.max(0, eMin - sMin);
+        const left = Math.max(0, sMin - CAL_START_HOUR * 60);
+        const right = Math.min(span, eMin - CAL_START_HOUR * 60);
+        if (right <= 0 || left >= span) return;
+        const width = Math.max(right - left, 6);
+        items.push({ ev: e, left, width, s: left, e: left + width });
+      });
+      assignLanes(items);
+      items.forEach(it => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'cal-block';
+        b.style.left = (it.left / span * 100) + '%';
+        b.style.width = (it.width / span * 100) + '%';
+        b.style.top = (it.lane / it.lanes * 100) + '%';
+        b.style.height = (100 / it.lanes) + '%';
+        b.style.background = CAL_COLORS[it.ev.calendar % CAL_COLORS.length];
+        if (it.width >= 120 && it.lanes === 1) b.textContent = it.ev.title; // only where it fits
+        b.title = it.ev.title;
+        b.addEventListener('click', () => showCalDetail(it.ev, day));
+        track.appendChild(b);
+      });
+      if (dayStart === todayKey) {
+        const nowMin = (Date.now() - dayStart) / 60000 - CAL_START_HOUR * 60;
+        if (nowMin >= 0 && nowMin <= span) {
+          const line = document.createElement('span');
+          line.className = 'cal-now-line';
+          line.style.left = (nowMin / span * 100) + '%';
+          track.appendChild(line);
+        }
+      }
+      row.appendChild(track);
+
+      const total = document.createElement('div');
+      total.className = 'cal-day-total';
+      total.textContent = dayMin ? fmtDuration(dayMin) : '—';
+      row.appendChild(total);
+
+      bookedMin += dayMin;
+      grid.appendChild(row);
+    }
+
+    const end = addDays(start, 6);
+    const sameMonth = start.getMonth() === end.getMonth();
+    const range = start.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' – ' +
+      (sameMonth ? end.getDate() : end.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }));
+    document.getElementById('calWeekLabel').textContent =
+      calWeekOffset === 0 ? 'This week' : calWeekOffset === 1 ? 'Next week' : calWeekOffset === -1 ? 'Last week' : 'Week of ' + start.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    document.getElementById('calWeekSub').textContent =
+      range + ' · ' + (bookedMin ? fmtDuration(bookedMin) + ' booked' : 'nothing booked');
+  }
+
+  function showCalDetail(e, day) {
+    const s = new Date(Date.parse(e.start)), en = new Date(Date.parse(e.end));
+    const when = e.allDay ? 'All day' : fmtTime(s) + ' – ' + fmtTime(en);
+    document.getElementById('calDetail').textContent =
+      day.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric' }) + ' · ' + when + ' · ' + e.title +
+      (e.location ? ' · ' + e.location : '');
+  }
+
+  async function fetchWeek(offset) {
+    const start = weekStart(offset), end = addDays(start, 7);
+    const q = '?start=' + encodeURIComponent(start.toISOString()) +
+              '&end=' + encodeURIComponent(end.toISOString()) +
+              '&tz=' + encodeURIComponent(CAL_TZ);
+    const data = await apiFetch('/api/calendar' + q, 'GET');
+    return data.events || [];
+  }
+
+  async function loadCalendar() {
+    if (!dashboardPasscode()) {
+      calMessage('Connect with your passcode above to see your calendar.');
+      showConnect();
+      return;
+    }
+    const btn = document.getElementById('calRefresh');
+    btn.classList.add('is-spinning');
+    setTimeout(() => btn.classList.remove('is-spinning'), 320);
+    try {
+      calThisWeek = await fetchWeek(0);
+      calShownWeek = calWeekOffset === 0 ? calThisWeek : await fetchWeek(calWeekOffset);
+      renderCalToday();
+      renderCalWeek();
+    } catch (e) {
+      if (e.code === 'bad-passcode') {
+        forgetPasscode();
+        calMessage('Connect with your passcode above to see your calendar.');
+      } else if (e.code === 'not-configured') {
+        calMessage('Calendar isn’t set up yet: add CALENDAR_ICS_URL in Vercel.');
+      } else if (e.code === 'calendar-bad-link') {
+        calMessage('Google Calendar refused the link: copy the secret iCal address again into CALENDAR_ICS_URL.');
+      } else {
+        calMessage('Couldn’t reach your calendar. Tap ↻ to retry.');
+      }
+    }
+  }
+
+  async function changeWeek(delta) {
+    calWeekOffset += delta;
+    document.getElementById('calDetail').textContent = '';
+    if (!calThisWeek) return;
+    try {
+      calShownWeek = calWeekOffset === 0 ? calThisWeek : await fetchWeek(calWeekOffset);
+      renderCalWeek();
+    } catch (e) {
+      document.getElementById('calWeekSub').textContent = 'Couldn’t load that week.';
+    }
+  }
+
+  document.getElementById('calRefresh').addEventListener('click', loadCalendar);
+  document.getElementById('calPrev').addEventListener('click', () => changeWeek(-1));
+  document.getElementById('calNext').addEventListener('click', () => changeWeek(1));
+
+  // ---------- Add handlers ----------
   function showStatus(el, message, isError) {
     el.textContent = message;
     el.classList.toggle('gm-status-error', !!isError);
@@ -1368,84 +1860,31 @@ body {
     el._t = setTimeout(() => { el.textContent = ''; el.classList.remove('gm-status-error'); }, 3500);
   }
 
-  async function polishOne(text) {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content:
-            'Rewrite this single goal so it is concrete, action-oriented, and under 60 characters. ' +
-            'Return ONLY a JSON array with exactly one string, no preamble, no code fences.\n\nGoal: ' + text
-        }]
-      })
-    });
-    const data = await res.json();
-    const content = (data && data.content && data.content[0] && data.content[0].text) || '';
-    const arr = JSON.parse(content);
-    if (!Array.isArray(arr) || arr.length < 1 || typeof arr[0] !== 'string') throw new Error('bad response');
-    return arr[0].trim();
-  }
-
-  function makeAddHandlers(input, addBtn, polishBtn, key, statusEl, reload) {
-    function plainAdd(text) {
+  function makeAddHandlers(input, addBtn, key, reload) {
+    addBtn.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (!text) return;
       const list = getGoals(key);
       list.push({ text, done: false });
       setGoals(key, list);
       input.value = '';
       reload();
-    }
-    addBtn.addEventListener('click', () => {
-      const text = input.value.trim();
-      if (!text) return;
-      plainAdd(text);
     });
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); addBtn.click(); }
-    });
-    polishBtn.addEventListener('click', async () => {
-      const text = input.value.trim();
-      if (!text) return;
-      if (!ANTHROPIC_API_KEY) {
-        plainAdd(text);
-        showStatus(statusEl, 'Polish needs an Anthropic API key — added as-typed.', false);
-        return;
-      }
-      polishBtn.disabled = true;
-      try {
-        const polished = await polishOne(text);
-        plainAdd(polished);
-      } catch (e) {
-        plainAdd(text);
-        showStatus(statusEl, 'Polish failed — added as-typed.', true);
-      } finally {
-        polishBtn.disabled = false;
-      }
     });
   }
 
   makeAddHandlers(
     document.getElementById('goalInput'),
     document.getElementById('goalAddBtn'),
-    document.getElementById('goalPolishBtn'),
     todayKey(),
-    document.getElementById('polishStatus'),
     loadToday
   );
   makeAddHandlers(
     document.getElementById('tomorrowInput'),
     document.getElementById('tomorrowAddBtn'),
-    document.getElementById('tomorrowPolishBtn'),
     tomorrowKey(),
-    document.getElementById('tomorrowStatus'),
     loadTomorrow
   );
 
@@ -1458,8 +1897,14 @@ body {
   updateDayRing();
   setInterval(updateDayRing, 60 * 1000);
   startTicker();
+  loadBrief();
   loadNotion();
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) loadNotion(); });
+  loadCalendar();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) { loadBrief(); loadNotion(); loadCalendar(); }
+  });
+  // Keep "now" / "next" and the now-line current between refreshes.
+  setInterval(() => { renderCalToday(); if (calWeekOffset === 0) renderCalWeek(); }, 60 * 1000);
 
   // Re-render when storage changes from another tab (or our bridged parent).
   window.addEventListener('storage', () => {

@@ -123,11 +123,6 @@ body.topbar-modal-open {
     <span class="topbar-pill-label">Goals</span>
     <span class="topbar-pill-count" id="topbarGoalsCount">—/—</span>
   </a>
-  <a href="health.html" class="topbar-pill" id="topbarStack">
-    <span class="topbar-pill-dot"></span>
-    <span class="topbar-pill-label">Stack</span>
-    <span class="topbar-pill-count" id="topbarStackCount">—/—</span>
-  </a>
   <a href="finance.html" class="topbar-pill" id="topbarFinance">
     <span class="topbar-pill-dot"></span>
     <span class="topbar-pill-label">Finance</span>
@@ -167,16 +162,6 @@ body.topbar-modal-open {
     return { done, total };
   }
 
-  function getStackProgress() {
-    let items = [];
-    try { items = JSON.parse(localStorage.getItem('stack:items')) || []; } catch (e) {}
-    let taken = {};
-    try { taken = JSON.parse(localStorage.getItem('stack:taken:' + activeDateKey())) || {}; } catch (e) {}
-    const total = Array.isArray(items) ? items.length : 0;
-    const done = total ? items.filter(i => i && taken[i.id]).length : 0;
-    return { done, total };
-  }
-
   function classifyStatus(done, total) {
     if (total === 0) return 'idle';
     if (done >= total) return 'good';
@@ -194,19 +179,14 @@ body.topbar-modal-open {
 
   function render() {
     const goalsEl = document.getElementById('topbarGoals');
-    const stackEl = document.getElementById('topbarStack');
     if (!goalsEl) return; // not injected yet
 
     const g = getGoalsProgress();
-    const s = getStackProgress();
 
     document.getElementById('topbarGoalsCount').textContent =
       g.total ? g.done + '/' + g.total : '0/0';
-    document.getElementById('topbarStackCount').textContent =
-      s.total ? s.done + '/' + s.total : '0/0';
 
     setPillStatus(goalsEl, classifyStatus(g.done, g.total));
-    setPillStatus(stackEl, classifyStatus(s.done, s.total));
   }
 
   // -------- Mobile lockdown helpers --------

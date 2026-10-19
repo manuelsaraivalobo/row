@@ -69,6 +69,35 @@
     if (watched && !isEmptyValue(before)) markChanged(key);
   };
 
+  // A small status line at the bottom of every page.
+  const STATUS_TEXT = {
+    'no-passcode': 'Sync off · connect with your passcode on Home',
+    'bad-passcode': 'Sync off · passcode not accepted',
+    'not-configured': 'Sync off · Supabase keys missing in Vercel',
+    'supabase-bad-key': 'Sync off · Supabase rejected the key (use the sb_secret key)',
+    'supabase-no-table': 'Sync off · app_state table not found in Supabase',
+    'offline': 'Offline · changes will sync later'
+  };
+  let statusEl = null;
+  function setStatus(kind) {
+    const ok = kind === 'ok';
+    const text = ok
+      ? '☁︎ Synced ' + new Date().toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+      : (STATUS_TEXT[kind] || 'Sync problem · ' + kind);
+    const paint = () => {
+      if (!statusEl) {
+        statusEl = document.createElement('div');
+        statusEl.id = 'syncStatus';
+        statusEl.setAttribute('role', 'status');
+        statusEl.style.cssText = 'margin:28px 0 8px;text-align:center;font:500 12px -apple-system,BlinkMacSystemFont,sans-serif;';
+        document.body.appendChild(statusEl);
+      }
+      statusEl.textContent = text;
+      statusEl.style.color = ok || kind === 'offline' ? '#AEAEB2' : '#FF3B30';
+    };
+    if (document.body) paint(); else document.addEventListener('DOMContentLoaded', paint, { once: true });
+  }
+
   async function api(method, body, keepalive) {
     const res = await fetch('/api/state', {
       method,
@@ -78,7 +107,11 @@
     });
     const data = await res.json().catch(() => ({}));
     if (res.status === 503 || res.status === 401) disabled = true; // not set up / wrong passcode
-    if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+    if (!res.ok) {
+      const err = new Error(data.error || ('HTTP ' + res.status));
+      err.code = data.error || ('http-' + res.status);
+      throw err;
+    }
     return data;
   }
 
@@ -135,12 +168,14 @@
       writeJson(PENDING_KEY, left);
       let changed = false;
       (result.newer || []).forEach(row => { if (applyRemote(row)) changed = true; });
+      setStatus('ok');
       if (changed) reloadOnce();
-    } catch (e) { /* offline or not set up: stays pending, retried later */ }
+    } catch (e) { setStatus(e.code || 'offline'); /* stays pending, retried later */ }
   }
 
   async function pull() {
-    if (disabled || !passcode()) return;
+    if (!passcode()) { setStatus('no-passcode'); return; }
+    if (disabled) return;
     try {
       const result = await api('GET');
       const rows = result.rows || [];
@@ -160,9 +195,10 @@
       writeJson(META_KEY, meta);
       writeJson(PENDING_KEY, pending);
 
+      setStatus('ok');
       if (changed) reloadOnce();
       else push(false);
-    } catch (e) { /* offline or not set up */ }
+    } catch (e) { setStatus(e.code || 'offline'); }
   }
 
   // Show the other device's changes: reload, but never twice in a row.

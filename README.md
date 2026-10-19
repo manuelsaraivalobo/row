@@ -38,6 +38,22 @@ It only works on Vercel (or `vercel dev`); opening `index.html` directly shows t
 
 The yellow card at the top shows today's brief: headline, the day in three parts, and *Needs attention* items with **+ Today** buttons. A weekday Claude scheduled task writes it as a JSON code block on a Notion page; [api/brief.js](api/brief.js) reads that page with the same `NOTION_TOKEN` (share the page with your integration). Set `NOTION_BRIEF_PAGE_ID` to use a different page.
 
+## Sync across devices (optional)
+
+Everything the pages save (goals, finance, debts…) lives in each device's `localStorage`. [sync.js](sync.js), loaded first on every page, copies changes to Supabase through [api/state.js](api/state.js) (behind `DASHBOARD_PASSCODE`) and pulls newer copies from other devices; last change wins per item. Without the variables below it does nothing.
+
+| Name | Value |
+|---|---|
+| `SUPABASE_URL` | Project URL, e.g. `https://abcd.supabase.co` |
+| `SUPABASE_SERVICE_KEY` | The project's secret / `service_role` key |
+
+Create the table once in Supabase → SQL editor:
+
+```sql
+create table app_state (key text primary key, data jsonb, updated_ms bigint not null default 0);
+alter table app_state enable row level security;
+```
+
 ## Calendar (optional)
 
 The home page shows **Today** (your events, with now / next) and **This week** (one row per day with busy blocks). [api/calendar.js](api/calendar.js) reads your calendar's secret iCal link — read-only — using the same `DASHBOARD_PASSCODE`.

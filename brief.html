@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Morning brief</title>
+<link rel="stylesheet" href="theme.css">
+<script src="topbar.js" defer></script>
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; }
+body { min-height: 100vh; overflow-x: hidden; }
+
+main {
+  max-width: 760px; margin: 0 auto;
+  padding: 20px 20px 80px;
+}
+
+.back-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px 8px 10px;
+  margin: 4px 0 18px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px; font-weight: 600;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-btn svg { display: block; }
+
+.page-title {
+  margin: 0 0 4px;
+  font-size: 40px; font-weight: 700;
+  letter-spacing: -0.035em; line-height: 1.05;
+  color: var(--ink);
+}
+.page-title::after { content: '.'; }
+.brief-date { font-size: 15px; color: var(--ink-2); margin-bottom: 20px; }
+.brief-date.is-stale { color: var(--orange); font-weight: 600; }
+
+.hero {
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--accent);
+  margin-bottom: 12px;
+}
+.hero.is-stale { background: var(--accent-soft); }
+.headline {
+  margin: 0;
+  font-size: 26px; font-weight: 600;
+  letter-spacing: -0.03em; line-height: 1.22;
+  color: var(--ink);
+}
+
+.acts {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  margin-top: 20px;
+}
+.act { padding: 0 14px; }
+.act:first-child { padding-left: 0; }
+.act + .act { border-left: 1px solid rgba(29, 29, 31, 0.15); }
+.act-time { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.act-text { font-size: 14px; line-height: 1.45; color: rgba(29, 29, 31, 0.75); }
+.acts:empty { display: none; }
+
+.card {
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  margin-bottom: 12px;
+}
+.card-title { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px; }
+.item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 6px;
+  border-radius: var(--radius-md);
+  background: var(--raised);
+}
+.item-num { width: 18px; flex-shrink: 0; font-size: 14px; color: var(--ink-3); font-variant-numeric: tabular-nums; padding-top: 1px; }
+.item-body { flex: 1; min-width: 0; }
+.item-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.item-title a { color: inherit; text-decoration-color: var(--ink-3); text-underline-offset: 2px; }
+.item-text { font-size: 14px; line-height: 1.5; color: var(--ink-2); margin-top: 3px; }
+.add-btn {
+  flex-shrink: 0;
+  padding: 8px 13px;
+  border: 0; border-radius: 999px;
+  background: var(--ink); color: #FFFFFF;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer;
+}
+.add-btn:disabled { background: var(--surface-2); color: var(--ink); cursor: default; }
+.calm { font-size: 15px; color: var(--ink-2); }
+
+.full-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 15px; font-weight: 600;
+}
+.full-link span:last-child { color: var(--ink-2); }
+
+.message { font-size: 15px; color: var(--ink-2); padding: 8px 0; }
+
+@media (max-width: 600px) {
+  main { padding: 16px 16px 60px; }
+  .page-title { font-size: 34px; }
+  .headline { font-size: 22px; }
+  .acts { grid-template-columns: 1fr; gap: 12px; }
+  .act { padding: 0; }
+  .act + .act { border-left: 0; border-top: 1px solid rgba(29, 29, 31, 0.15); padding-top: 12px; }
+  .hero, .card { padding: 18px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <a href="index.html" class="back-btn" aria-label="Back to dashboard">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    <span>Dashboard</span>
+  </a>
+
+  <h1 class="page-title">Morning brief</h1>
+  <div class="brief-date" id="briefDate">&nbsp;</div>
+
+  <div class="hero" id="hero">
+    <p class="headline" id="headline">Loading today’s brief…</p>
+    <div class="acts" id="acts"></div>
+  </div>
+
+  <div class="card" id="attentionCard" hidden>
+    <div class="card-title">Needs attention</div>
+    <div id="attention"></div>
+  </div>
+
+  <a class="full-link" id="fullLink" href="https://claude.ai/artifact/WUxtRNmXspUwYNmKFVcs61" target="_blank" rel="noopener">
+    <span>Full brief with the day drawing</span><span>claude.ai ↗</span>
+  </a>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  // Same storage keys as the home page, so "+ Today" lands on today's list.
+  const PASS_KEY = 'notion:passcode';
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function dateToKey(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  function todayKey() {
+    const d = new Date();
+    if (d.getHours() < 6) d.setDate(d.getDate() - 1); // matches the home page's 6 AM rollover
+    return 'goals:' + dateToKey(d);
+  }
+  function getGoals() {
+    try { return JSON.parse(localStorage.getItem(todayKey())) || []; } catch (e) { return []; }
+  }
+  function setGoals(list) {
+    try { localStorage.setItem(todayKey(), JSON.stringify(list)); } catch (e) {}
+  }
+  function passcode() {
+    try { return localStorage.getItem(PASS_KEY) || ''; } catch (e) { return ''; }
+  }
+
+  function showMessage(text) {
+    document.getElementById('headline').textContent = text;
+    document.getElementById('hero').classList.add('is-stale');
+  }
+
+  function render(brief) {
+    if (!brief || !brief.headline) {
+      showMessage('No brief yet — it’s written on weekday mornings.');
+      return;
+    }
+    const stale = brief.date && brief.date !== dateToKey(new Date());
+    const dateEl = document.getElementById('briefDate');
+    const when = brief.date
+      ? new Date(brief.date + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })
+      : '';
+    dateEl.textContent = stale ? 'From ' + when + ' — today’s isn’t out yet' : when;
+    dateEl.classList.toggle('is-stale', !!stale);
+    document.getElementById('hero').classList.toggle('is-stale', !!stale);
+    document.getElementById('headline').textContent = brief.headline;
+    if (brief.briefUrl) document.getElementById('fullLink').href = brief.briefUrl;
+
+    const acts = document.getElementById('acts');
+    acts.innerHTML = '';
+    brief.acts.forEach(a => {
+      const col = document.createElement('div');
+      col.className = 'act';
+      const t = document.createElement('div'); t.className = 'act-time'; t.textContent = a.time;
+      const x = document.createElement('div'); x.className = 'act-text'; x.textContent = a.text;
+      col.appendChild(t); col.appendChild(x);
+      acts.appendChild(col);
+    });
+
+    const card = document.getElementById('attentionCard');
+    const list = document.getElementById('attention');
+    list.innerHTML = '';
+    card.hidden = false;
+    if (!brief.attention.length) {
+      const calm = document.createElement('div');
+      calm.className = 'calm';
+      calm.textContent = 'Nothing needs you this morning.';
+      list.appendChild(calm);
+      return;
+    }
+    const inToday = new Set(getGoals().map(g => g.text));
+    brief.attention.forEach((item, i) => {
+      const row = document.createElement('div');
+      row.className = 'item';
+      const num = document.createElement('div'); num.className = 'item-num'; num.textContent = i + 1;
+      row.appendChild(num);
+
+      const body = document.createElement('div');
+      body.className = 'item-body';
+      const title = document.createElement('div');
+      title.className = 'item-title';
+      if (item.url) {
+        const a = document.createElement('a');
+        a.href = item.url; a.target = '_blank'; a.rel = 'noopener';
+        a.textContent = item.title;
+        title.appendChild(a);
+      } else {
+        title.textContent = item.title;
+      }
+      body.appendChild(title);
+      if (item.text) {
+        const text = document.createElement('div');
+        text.className = 'item-text';
+        text.textContent = item.text;
+        body.appendChild(text);
+      }
+      row.appendChild(body);
+
+      const add = document.createElement('button');
+      add.type = 'button';
+      add.className = 'add-btn';
+      const added = inToday.has(item.title);
+      add.textContent = added ? 'Added ✓' : '+ Today';
+      add.disabled = added;
+      add.addEventListener('click', () => {
+        const goals = getGoals();
+        if (!goals.some(g => g.text === item.title)) {
+          goals.push({ text: item.title, done: false });
+          setGoals(goals);
+        }
+        add.textContent = 'Added ✓';
+        add.disabled = true;
+      });
+      row.appendChild(add);
+      list.appendChild(row);
+    });
+  }
+
+  async function load() {
+    if (!passcode()) {
+      showMessage('Connect your dashboard first: open the home page and enter your passcode.');
+      return;
+    }
+    try {
+      const res = await fetch('/api/brief', { headers: { 'x-passcode': passcode() } });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        showMessage(data.error === 'bad-passcode'
+          ? 'Your passcode changed — enter it again on the home page.'
+          : 'Couldn’t load the brief. Use the full brief link below.');
+        return;
+      }
+      render(data.brief);
+    } catch (e) {
+      showMessage('Couldn’t load the brief. Use the full brief link below.');
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

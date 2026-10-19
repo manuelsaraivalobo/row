@@ -15,7 +15,6 @@ Open any `.html` file directly in your browser — no build step, no install.
 | File | What it is |
 |---|---|
 | [index.html](index.html) | Goals tracker (Day Ring, Goal Ticker, To Do list) — the home page |
-| [health.html](health.html) | Supplement / daily stack tracker |
 | [finance.html](finance.html) | Finances |
 | [topbar.js](topbar.js) | Shared top bar — auto-injected into pages that `<script src="topbar.js">` |
 
@@ -34,6 +33,18 @@ The home page shows open tasks from a Notion "Task List" database under **From N
 | `NOTION_DATABASE_ID` | Optional, to use a different database |
 
 It only works on Vercel (or `vercel dev`); opening `index.html` directly shows the card but can't reach Notion.
+
+## Morning brief (optional)
+
+The yellow card at the top shows today's brief: headline, the day in three parts, and *Needs attention* items with **+ Today** buttons. A weekday Claude scheduled task writes it as a JSON code block on a Notion page; [api/brief.js](api/brief.js) reads that page with the same `NOTION_TOKEN` (share the page with your integration). Set `NOTION_BRIEF_PAGE_ID` to use a different page.
+
+## Calendar (optional)
+
+The home page shows **Today** (your events, with now / next) and **This week** (one row per day with busy blocks). [api/calendar.js](api/calendar.js) reads your calendar's secret iCal link — read-only — using the same `DASHBOARD_PASSCODE`.
+
+| Name | Value |
+|---|---|
+| `CALENDAR_ICS_URL` | Google Calendar → Settings → your calendar → *Secret address in iCal format*. Several links can be separated by spaces. |
 
 ## Building from scratch
 
